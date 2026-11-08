@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff8ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="이음">
+<meta name="format-detection" content="telephone=no">
+<title>이음 – 체험 프로토타입</title>
+<style>
+:root{--bg:#fff8ef;--ink:#2b2d42;--sub:#6b6f80;--line:#efe3d3;--pri:#ff7a45;--teal:#22a39f;--r:18px}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;word-break:keep-all}
+button{font:inherit;cursor:pointer;color:inherit}
+header{position:sticky;top:0;z-index:10;background:rgba(255,248,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:10px 18px;flex-wrap:wrap}
+.logo{font-weight:900;font-size:22px;margin-right:6px}.logo b{color:#c2410c}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+.navbtn{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-weight:800;color:var(--sub)}
+.navbtn.active{background:var(--ink);color:#fff}
+#stars{margin-left:auto;background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-weight:800}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 70px}
+.card{background:#fff;border-radius:var(--r);padding:20px;border:1px solid var(--line);box-shadow:0 2px 0 var(--line),0 8px 24px rgba(43,45,66,.05);margin-bottom:18px}
+h1,h2,h3{line-height:1.3}
+h2{margin:6px 0 10px;font-size:24px}h3{margin:0 0 10px;font-size:18px}
+.sub{color:var(--sub)}
+.hero{background:linear-gradient(135deg,#ff8f5e,#ffc46b);color:#fff;border:0}
+.hero h1{font-size:30px;margin:0 0 8px}.hero p{margin:0 0 14px;font-size:17px}
+.hero .btn{background:#fff;color:#b8400c}
+.btn{border:0;background:var(--pri);color:#fff;font-weight:800;padding:10px 18px;border-radius:12px}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn:hover{filter:brightness(.97)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;background:#2b2d42;color:#fff;font-size:12px;padding:3px 10px;border-radius:999px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:780px){.grid2{grid-template-columns:1fr}.hero h1{font-size:24px}}
+/* concept map */
+.cmlabel{font-weight:900;margin-top:14px}
+.cmrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0}
+.node{border:2px solid var(--line);background:#fff;border-radius:14px;padding:8px 12px;font-weight:800;text-align:center;transition:transform .15s}
+.node small{display:block;font-weight:600;color:var(--sub);font-size:11px}
+.node.act{border-color:var(--pri);background:#fff1e8;cursor:pointer}
+.node.act:hover{transform:translateY(-2px)}
+.node.lock{opacity:.5;cursor:default}
+.node.star{border-color:#d4541c;background:#ffe2cf;box-shadow:0 0 0 3px #fff1e8}
+.cmarr{color:#c9b8a3;font-weight:900}
+#record{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+#record li{background:#faf5ee;border-radius:10px;padding:8px 10px;color:var(--sub)}
+#record li.ok{background:#fff3c9;color:var(--ink);font-weight:700}
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 16px}
+.tab{border:2px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-weight:800}
+.tab.on{border-color:var(--pri);background:#fff1e8;color:#d4541c}
+/* fraction */
+.pizza{width:100%;max-width:300px;display:block;margin:0 auto}
+.pizza.click .slice{cursor:pointer;transition:filter .15s}
+.pizza.click .slice:hover{filter:brightness(.94)}
+.slice:focus{outline:none;stroke:#2b2d42;stroke-width:4}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.1;font-weight:800;margin:0 .12em}
+.frac>span:first-child{border-bottom:.1em solid currentColor;padding:0 .25em}
+.bigfrac{font-size:60px;color:#d4541c;text-align:center;margin:4px 0}
+.bar,.cb{display:grid;grid-template-columns:repeat(var(--n),1fr);border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff}
+.bar{height:34px}.cb{height:30px;flex:1}
+.bar span,.cb span{border-right:2px solid var(--ink);background:#fff;transition:background .2s}
+.bar span:last-child,.cb span:last-child{border-right:0}
+.bar span.on{background:#ffa94d}
+.bar.tt{height:46px;max-width:460px;margin:0 auto}.bar.tt span{background:#fff6e5}.bar.tt span.on{background:#9fd08f}
+.cmp{display:flex;align-items:center;gap:10px;margin:8px 0}
+.cl{width:64px;font-size:13px;color:var(--sub);flex:none}
+.nl{width:100%;max-width:420px;display:block;margin:8px auto 0}
+.msg{background:#fff7e6;border:2px dashed #f2c46b;border-radius:14px;padding:12px 14px;margin-top:12px}
+.msg:empty{display:none}
+.msg.good{background:#e9f8ef;border-color:#7fd1b4}
+.urow{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:13px}
+.ul{width:36px;text-align:right;color:var(--sub)}
+.ut{flex:1;height:14px;background:#f4ede3;border-radius:7px;overflow:hidden}
+.ub{display:block;height:100%;background:#d6cab9;border-radius:7px;transition:background .2s}
+.urow.cur .ub{background:var(--pri)}.urow.cur .ul{color:var(--pri);font-weight:900}
+.stepper{display:inline-flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px}
+.stepper button{width:38px;height:38px;border-radius:50%;border:0;background:#f4ede3;font-size:20px;font-weight:900}
+.stepper span{min-width:28px;text-align:center;font-weight:900;font-size:18px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;font-size:14px}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.link{border:0;background:none;color:#d4541c;font-weight:800;text-decoration:underline;padding:0}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center}
+.vs .pizza{max-width:210px}
+.eqsign{font-size:34px;font-weight:900;color:var(--sub)}
+.pizzas{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}
+.pizzas .pizza{width:118px;margin:0}
+.kids{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.kid{border:3px solid var(--c);border-radius:16px;padding:8px 12px;text-align:center;background:#fff;min-width:104px;font-size:14px}
+.kid b{display:block;color:var(--c);font-size:22px}
+.eq{font-size:34px;font-weight:900;text-align:center;margin:16px 0 6px}
+.connect{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.connect .node{font-size:14px}
+textarea{width:100%;min-height:90px;border:2px solid var(--line);border-radius:12px;padding:10px;font:inherit;resize:vertical}
+textarea:focus{outline:none;border-color:var(--pri)}
+.checks{list-style:none;padding:0;margin:10px 0 0}.checks li{padding:3px 0;color:var(--sub)}.checks li.ok{color:var(--ink);font-weight:700}
+/* origin story */
+.ointro{background:#fff;border:2px dashed #f2c46b;border-radius:14px;padding:10px 14px;margin-bottom:12px;font-weight:600}
+.ostory{font-size:16.5px;margin:6px 0 12px}
+.obox{background:#faf5ee;border-radius:14px;padding:14px;margin:10px 0}
+.center{text-align:center}
+.emo{font-size:38px;letter-spacing:4px;line-height:1.25}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.choice{text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:700}
+.choice:hover{border-color:var(--pri)}
+.choice.right{border-color:#7fd1b4;background:#e9f8ef}.choice.wrong{border-color:#f2a7a0;background:#fdeeee}
+.ores{background:#e9f8ef;border:2px solid #9fd8bf;border-radius:14px;padding:12px 14px;margin-top:12px;animation:pop .35s}
+.ores p{margin:6px 0}
+.tag{display:inline-block;color:#fff;border-radius:999px;padding:1px 10px;font-size:13px;font-weight:800;margin-right:4px}
+.tag.why{background:#e0663a}.tag.so{background:#1d6b55}
+.svgw{width:100%;display:block}
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+@media(max-width:560px){.people{grid-template-columns:repeat(2,1fr)}}
+.person{border:3px solid var(--c);border-radius:14px;padding:8px;text-align:center;background:#fff;font-size:14px}
+.person b{display:flex;align-items:center;justify-content:center;gap:2px;color:var(--c);font-size:20px;min-height:46px}
+.fact{font-size:14px;background:#eef6ff;border-radius:12px;padding:8px 12px;margin-top:10px}
+.ncards{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:780px){.ncards{grid-template-columns:repeat(2,1fr)}}
+.ncard{border:2px solid var(--line);border-radius:14px;padding:10px 6px;background:#fff;font-weight:800;line-height:1.3}
+.ncard small{display:block;color:var(--sub);font-weight:700;font-size:12px}
+.ncard.seen{background:#fff7ee}.ncard.on{border-color:var(--pri);background:#fff1e8}
+.nshow{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;text-align:center}
+.nbig{font-size:46px;font-weight:900;color:#d4541c;display:flex;align-items:center;justify-content:center;gap:12px;min-height:110px;flex-wrap:wrap}
+.stack{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05}
+.lfrac{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin:8px 0}
+.lfrac .bigfrac{margin:0;font-size:72px}
+.ltags{display:flex;flex-direction:column;gap:26px}
+.ltag{border-radius:12px;padding:6px 12px;font-weight:800}
+.ltag small{display:block;font-weight:600;color:var(--sub)}
+.glyph{display:inline-flex;flex-direction:column;align-items:center;font-size:12px;color:var(--sub);font-weight:700;line-height:1.3}
+/* history */
+.erabar{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.era{flex:1 0 96px;border:2px solid var(--line);background:#fff;border-radius:14px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.era span{font-size:22px}.era small{font-size:11px;font-weight:800;color:var(--sub);text-align:center;line-height:1.25}
+.era.seen{background:#fff7ee}.era.on{border-color:var(--pri);background:#fff1e8}.era.on small{color:#d4541c}
+.hgrid{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;margin-top:14px}
+@media(max-width:880px){.hgrid{grid-template-columns:1fr}}
+.yrs{display:inline-block;background:var(--ink);color:#fff;font-size:13px;padding:3px 10px;border-radius:999px}
+.step{background:var(--sb);border-radius:14px;padding:12px 14px;display:flex;gap:12px;animation:pop .35s}
+.sl{flex:none;width:84px}.sl b{display:block}.sl small{color:var(--sub)}
+.step p{margin:0}
+.arr{text-align:center;color:#c9b8a3;font-size:20px;line-height:1.3}
+.guess{border:2px dashed #e7cfb4;border-radius:14px;padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between;font-weight:700}
+.map{width:100%;max-width:250px;display:block;margin:0 auto}
+.legend{text-align:center;margin-top:8px;font-weight:700}
+.world{background:#eef6ff;border-radius:14px;padding:12px 14px;margin-top:14px}
+.scnav{display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}
+.hanflow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hf{flex:1 1 120px;border-radius:14px;padding:10px;color:#2b2d42;text-align:center;font-weight:900}
+.hf small{display:block;font-weight:700;opacity:.8}
+.sq{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;margin:6px 0;font-weight:600}
+.sq:hover:not(:disabled){border-color:var(--pri)}
+.sq.done{background:#e9f8ef;border-color:#9fd8bf;color:#1d6b55;cursor:default}
+.sq .no{background:var(--teal);color:#fff;border-radius:50%;width:24px;height:24px;display:inline-grid;place-items:center;font-size:13px;flex:none}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;border:2px solid var(--line);margin:6px 0;cursor:pointer;background:#fff}
+.opt input{margin-top:6px;width:18px;height:18px}
+.opt.right{border-color:#7fd1b4;background:#e9f8ef}.opt.wrong{border-color:#f2a7a0;background:#fdeeee}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.shake{animation:shake .4s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:800;transition:transform .3s;z-index:50;max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.note{font-size:13px;color:var(--sub)}
+
+/* ===== mobile & touch ===== */
+.sm{display:none}@media(max-width:640px){.sm{display:inline}.lg{display:none}}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,.opt,.choice,.chip,.tab,.node,.era{touch-action:manipulation;-webkit-tap-highlight-color:rgba(255,122,69,.18)}
+.cmarr{color:#7d6a57}.node.star small{color:#555a6b}
+#oc-head,#sc-head{scroll-margin-top:72px}
+.erabar,.tabs{scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.erabar::-webkit-scrollbar,.tabs::-webkit-scrollbar{display:none}
+.erabar{scroll-snap-type:x proximity}.era{scroll-snap-align:center}
+button:active{transform:scale(.97)}
+@media(hover:none){.btn:hover,.choice:hover,.sq:hover:not(:disabled){filter:none;border-color:var(--line)}.btn:hover{filter:none}.node.act:hover{transform:none}}
+@media(max-width:640px){
+  body{font-size:16px;padding-bottom:calc(68px + env(safe-area-inset-bottom))}
+  header{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff8ef;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top));flex-wrap:nowrap}
+  .logo{font-size:20px}
+  #stars{font-size:14px;padding:5px 10px}
+  /* 아래쪽 탭 바 */
+  nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(43,45,66,.08);display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+  .navbtn{border-radius:14px;padding:8px 4px;font-size:13.5px;line-height:1.25;min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .navbtn.active{background:#fff1e8;color:#c2410c}
+  main{padding:14px 12px 24px}
+  .card{padding:16px 14px;border-radius:16px;margin-bottom:14px}
+  h2{font-size:21px}h3{font-size:17px}
+  .hero h1{font-size:23px;margin-top:10px}.hero p{font-size:16px}
+  .hero .row{flex-direction:column;align-items:stretch}
+  .btn{min-height:46px;padding:11px 16px;font-size:16px}
+  .row>.btn{flex:1 1 auto}
+  .scnav{flex-direction:column-reverse}.scnav .btn{width:100%}
+  /* 탭은 한 줄로 밀어서 보기 */
+  .tabs{flex-wrap:nowrap;overflow-x:auto;margin:6px -12px 14px;padding:2px 12px 4px}
+  .tab{flex:none;padding:10px 14px;font-size:14.5px}
+  /* 연결 지도·흐름은 위에서 아래로 */
+  .cmrow,.connect,.hanflow{flex-direction:column;align-items:stretch;gap:2px}
+  .cmrow .cmarr,.connect .cmarr,.hanflow .cmarr{transform:rotate(90deg);align-self:center;line-height:1;font-size:18px;padding:2px 0}
+  .node{padding:10px 12px;font-size:15px}
+  .hf{flex:none}
+  .yrs{border-radius:12px;line-height:1.45}
+  #record{grid-template-columns:1fr}
+  /* 시대 막대 */
+  .erabar{margin:0 -12px;padding:2px 12px 8px}
+  .era{flex:0 0 84px;min-height:64px}
+  .era small{font-size:11.5px}
+  /* 선택지·퀴즈 손가락 크기 */
+  .choice,.opt,.sq{min-height:48px;padding:12px 14px;font-size:15.5px}
+  .chip{min-height:42px;min-width:44px;padding:8px 12px;font-size:15px}
+  .stepper button{width:44px;height:44px}
+  .ostory{font-size:16px}
+  .emo{font-size:32px;letter-spacing:2px}
+  .bigfrac{font-size:52px}
+  .lfrac .bigfrac{font-size:60px}
+  .nbig{font-size:38px;min-height:96px}
+  .eq{font-size:28px}
+  .vs{grid-template-columns:1fr;gap:4px}
+  .vs .pizza{max-width:200px}
+  .eqsign{font-size:24px}
+  .pizzas .pizza{width:96px}
+  .kid{min-width:88px;padding:6px 8px}
+  .people{gap:6px}
+  .step{gap:10px;padding:12px}
+  .sl{width:70px}
+  .guess{flex-direction:column;align-items:stretch}
+  .guess .btn{width:100%}
+  .hgrid{gap:14px}
+  textarea{font-size:16px}
+  #toast{bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+@media(max-width:360px){.navbtn{font-size:12.5px}.logo{font-size:18px}.ncards{grid-template-columns:1fr 1fr}}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="logo">🔗 <b>이음</b></div>
+  <nav>
+    <button class="navbtn active" data-go="home">🏠 홈</button>
+    <button class="navbtn" data-go="frac" data-tab="o"><span>🏺 수학</span><span class="lg"> · </span><span>분수</span></button>
+    <button class="navbtn" data-go="hist" data-tab="0"><span>🏯 한국사</span><span class="lg"> · </span><span>삼국시대</span></button>
+  </nav>
+  <div id="stars">⭐ 0 / 11</div>
+</header>
+
+<main>
+<!-- HOME -->
+<section id="home" class="view">
+  <div class="card hero">
+    <span class="badge">체험용 프로토타입 · 시범 단원 2개</span>
+    <h1>외우지 말고, 이어서 이해해요</h1>
+    <p>지금 배우는 개념이 <b>어디서 왔고, 어디로 이어지는지</b> 눈으로 보고 손으로 만져 보며 배워요.</p>
+    <div class="row">
+      <button class="btn" data-go="frac" data-tab="o">🏺 분수는 왜 생겼을까?</button>
+      <button class="btn" data-go="hist" data-tab="0">🏯 삼국시대 흐름 따라가기</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🗺️ 개념 연결 지도</h3>
+    <div class="sub">주황색 칸을 누르면 바로 배울 수 있어요. 🔒 칸은 정식 버전에서 열려요. (학년은 대략적인 위치예요)</div>
+    <div class="cmlabel">수학</div>
+    <div class="cmrow">
+      <button class="node act" data-go="frac" data-tab="c">나눗셈<small>3학년</small></button><span class="cmarr">→</span>
+      <button class="node act star" data-go="frac" data-tab="o">🏺 분수는 왜 생겼을까?<small>시작 이야기</small></button><span class="cmarr">→</span>
+      <button class="node act" data-go="frac" data-tab="a">분수<small>3~4학년</small></button><span class="cmarr">→</span>
+      <button class="node act" data-go="frac" data-tab="b">크기가 같은 분수<small>5학년</small></button><span class="cmarr">→</span>
+      <span class="node lock">🔒 비와 비율<small>6학년</small></span><span class="cmarr">→</span>
+      <span class="node lock">🔒 정비례 · 함수<small>중학교</small></span>
+    </div>
+    <div class="cmlabel">한국사</div>
+    <div class="cmrow">
+      <button class="node act" data-go="hist" data-tab="0">고조선</button><span class="cmarr">→</span>
+      <button class="node act" data-go="hist" data-tab="1">삼국과 가야</button><span class="cmarr">→</span>
+      <button class="node act" data-go="hist" data-tab="2">삼국의 전성기</button><span class="cmarr">→</span>
+      <button class="node act" data-go="hist" data-tab="6">삼국 통일</button><span class="cmarr">→</span>
+      <button class="node act" data-go="hist" data-tab="7">남북국 시대</button><span class="cmarr">→</span>
+      <span class="node lock">🔒 고려</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⭐ 오늘 모은 별</h3>
+    <ul id="record"></ul>
+    <p class="note">체험판이라 창을 닫으면 기록이 사라져요.</p>
+  </div>
+</section>
+
+<!-- FRACTION -->
+<section id="frac" class="view" hidden>
+  <h2>🏺 분수, 처음부터 이어 보기</h2>
+  <div class="sub">분수가 <b>왜 생겼는지</b>부터 따라간 다음, 직접 나누고 골라 보며 "왜 그런지"를 찾아봐요.</div>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-ftab="o">⓪ 분수는 왜 생겼을까?</button>
+    <button class="tab" data-ftab="a">① 피자 나누기</button>
+    <button class="tab" data-ftab="b">② 크기가 같은 분수</button>
+    <button class="tab" data-ftab="c">③ 분수 = 나눗셈?</button>
+  </div>
+
+  <!-- Tab O : origin story -->
+  <div id="tab-o" class="fpanel">
+    <div class="ointro">⏳ 분수는 처음부터 교과서에 있던 게 아니에요. 옛날 사람들이 <b>어떤 문제에 부딪혀서</b> 분수를 만들어 냈는지, 시간 여행을 떠나 봐요.</div>
+    <div class="erabar" id="oc-bar"></div>
+    <div class="card" style="margin-top:12px">
+      <div id="oc-head"></div>
+
+      <!-- 1. 수가 모자라 -->
+      <div class="ocp" data-p="0">
+        <p class="ostory"><span class="tag why">문제 상황</span> 아주 먼 옛날 사람들은 <b>1, 2, 3…</b>처럼 하나씩 세는 수만 썼어요. 양이 몇 마리인지, 빵이 몇 개인지 세기에는 이걸로 충분했죠.<br>그런데 어느 날, 하루 일을 마친 <b>일꾼 4명</b>에게 <b>빵 3개</b>를 똑같이 나눠 줘야 했어요.</p>
+        <div class="obox center">
+          <div class="emo">🍞🍞🍞</div><div class="sub">빵 3개</div>
+          <div class="emo" style="margin-top:6px">🧑‍🌾🧑‍🌾🧑‍🌾🧑‍🌾</div><div class="sub">일꾼 4명</div>
+        </div>
+        <b>🤔 어떻게 하면 공평할까요?</b>
+        <div class="opts" id="o0-opts">
+          <button class="choice" data-o0="0">A. 3명에게 1개씩 주고, 1명은 내일 준다</button>
+          <button class="choice" data-o0="1">B. 빵을 1개 더 구해 와서 4개로 만든다</button>
+          <button class="choice" data-o0="2">C. 빵을 잘라서 조각으로 똑같이 나눈다</button>
+        </div>
+        <div class="msg" id="o0-msg"></div>
+        <div class="ores" id="o0-res" hidden>
+          <span class="tag so">그래서?</span>
+          <p>빵을 자르면 한 사람이 받는 양은 <b>빵 1개보다 적고, 0개보다는 많아요.</b> 그런데 1, 2, 3 같은 수로는 이 양을 말할 수가 없었어요.</p>
+          <svg viewBox="0 0 320 78" class="nl" role="img" aria-label="0과 1 사이에 물음표가 있는 수직선">
+            <rect x="30" y="30" width="260" height="20" rx="6" fill="#ffe2cf"/>
+            <line x1="24" y1="40" x2="296" y2="40" stroke="#2b2d42" stroke-width="3" stroke-linecap="round"/>
+            <line x1="24" y1="30" x2="24" y2="50" stroke="#2b2d42" stroke-width="2.5"/><line x1="296" y1="30" x2="296" y2="50" stroke="#2b2d42" stroke-width="2.5"/>
+            <text x="24" y="68" text-anchor="middle" font-size="14" font-weight="800">0</text><text x="296" y="68" text-anchor="middle" font-size="14" font-weight="800">1</text>
+            <text x="160" y="24" text-anchor="middle" font-size="22" font-weight="900" fill="#d4541c">? ? ?</text>
+            <text x="160" y="70" text-anchor="middle" font-size="11" fill="#6b6f80">이 사이의 양을 부를 이름이 없었어요</text>
+          </svg>
+          <p><b>👉 0과 1 사이를 나타낼 새로운 수가 필요해졌어요. 그게 바로 분수예요!</b></p>
+        </div>
+      </div>
+
+      <!-- 2. 재다 보니 남았다 -->
+      <div class="ocp" data-p="1" hidden>
+        <p class="ostory"><span class="tag why">문제 상황</span> 고대 이집트에서는 해마다 <b>나일강</b>이 넘쳐서 밭의 경계가 지워졌어요. 물이 빠지면 땅을 다시 재서 주인에게 돌려줘야 했죠.<br>길이를 잴 때는 팔꿈치에서 가운데 손가락 끝까지의 길이인 <b>'큐빗'</b>을 기준으로 삼았어요. 이 밭의 길이를 재 볼까요?</p>
+        <div class="obox">
+          <div id="o1-svg"></div>
+          <div class="row" id="o1-step1" style="margin-top:8px"><button class="btn" id="o1-lay">📏 큐빗 막대 대기</button></div>
+          <div id="o1-step2" hidden style="margin-top:8px">
+            <b>남은 부분은 1큐빗보다 짧아요. 큐빗 막대를 똑같이 몇 조각으로 나눠서 재 볼까요?</b>
+            <div class="row" id="o1-chips" style="gap:6px;margin-top:8px"></div>
+          </div>
+          <div class="msg" id="o1-msg"></div>
+        </div>
+        <div class="ores" id="o1-res" hidden>
+          <span class="tag so">그래서?</span>
+          <p>이 밭의 길이는 <b>2큐빗과 3/4큐빗</b>이에요. 기준(1큐빗)을 <b>똑같이 쪼개고, 그 조각이 몇 개인지 세는 것</b>. 이것이 분수의 시작이에요.</p>
+          <div class="fact">📜 실제로 이집트 사람들은 1큐빗을 손바닥 너비 7개, 손가락 너비 28개로 나눠서 더 작은 길이까지 쟀어요.</div>
+        </div>
+      </div>
+
+      <!-- 3. 이집트의 빵 나누기 -->
+      <div class="ocp" data-p="2" hidden>
+        <p class="ostory"><span class="tag why">문제 상황</span> 이집트의 서기 아메스가 베껴 쓴 수학책 <b>'린드 파피루스'</b>에는 빵을 여러 사람에게 나누는 문제가 나와요. 이집트 사람들은 1/2, 1/4처럼 <b>'1조각짜리' 분수</b>를 주로 썼어요.<br>그들처럼 <b>빵 3개를 4명</b>에게 나눠 볼까요?</p>
+        <div class="obox">
+          <div id="o2-svg"></div>
+          <div class="people" id="o2-people"></div>
+          <div class="row" style="margin-top:12px"><button class="btn" id="o2-step"></button><button class="btn ghost" id="o2-reset">처음부터</button></div>
+          <div class="msg" id="o2-msg"></div>
+        </div>
+        <div id="o2-quiz" hidden>
+          <b>🤔 한 사람이 받은 양(1/2과 1/4)을 하나의 분수로 말하면?</b>
+          <div class="opts" id="o2-opts"></div>
+          <div class="msg" id="o2-qmsg"></div>
+        </div>
+        <div class="ores" id="o2-res" hidden>
+          <span class="tag so">그래서?</span>
+          <div class="row" style="justify-content:center;gap:18px">
+            <svg viewBox="0 0 200 90" style="width:220px" role="img" aria-label="빵 1개를 4조각으로 나눈 것 중 3조각">
+              <defs><clipPath id="one"><rect x="10" y="10" width="180" height="60" rx="24"/></clipPath></defs>
+              <g clip-path="url(#one)"><rect x="10" y="10" width="90" height="60" fill="#ff8c42"/><rect x="100" y="10" width="45" height="60" fill="#ffb27d"/><rect x="145" y="10" width="45" height="60" fill="#fff6e5"/></g>
+              <line x1="55" y1="10" x2="55" y2="70" stroke="#fff" stroke-width="2" stroke-dasharray="4 3"/><line x1="100" y1="10" x2="100" y2="70" stroke="#fff" stroke-width="3"/><line x1="145" y1="10" x2="145" y2="70" stroke="#b9853f" stroke-width="2"/>
+              <rect x="10" y="10" width="180" height="60" rx="24" fill="none" stroke="#b9853f" stroke-width="2.5"/>
+              <text x="55" y="86" text-anchor="middle" font-size="11" fill="#6b6f80">1/2 (=작은 조각 2개)</text><text x="122" y="86" text-anchor="middle" font-size="11" fill="#6b6f80">1/4</text>
+            </svg>
+            <div class="glyph"><svg viewBox="0 0 80 70" width="70" aria-hidden="true"><ellipse cx="40" cy="13" rx="30" ry="9" fill="#2b2d42"/><rect x="19" y="30" width="5" height="34" rx="2" fill="#2b2d42"/><rect x="32" y="30" width="5" height="34" rx="2" fill="#2b2d42"/><rect x="45" y="30" width="5" height="34" rx="2" fill="#2b2d42"/><rect x="58" y="30" width="5" height="34" rx="2" fill="#2b2d42"/></svg>이집트 글자로 쓴 1/4<br>(입 모양 기호 + 막대 4개)</div>
+          </div>
+          <p>반쪽(1/2)은 작은 조각 2개와 같아요. 그래서 <b>1/2 + 1/4 = 작은 조각 3개 = 3/4</b>이에요.</p>
+          <p>이집트 사람들은 이렇게 <b>1조각짜리 분수를 더해서</b> 나타냈고, 지금 우리는 한 번에 <b>3/4</b>이라고 써요.</p>
+        </div>
+      </div>
+
+      <!-- 4. 분모와 분자 -->
+      <div class="ocp" data-p="3" hidden>
+        <p class="ostory"><span class="tag why">문제 상황</span> 분수를 많이 쓰게 되자 <b>숫자 두 개를 부를 이름</b>이 필요해졌어요. 옛 중국의 수학책 <b>『구장산술』</b>에는 분수 계산법이 자세히 나오는데, 이런 책에서 쓰던 이름이 바로 <b>분모(分母)</b>와 <b>분자(分子)</b>예요.<br>母는 <b>엄마</b>, 子는 <b>아이</b>라는 뜻이에요. 전체를 몇 조각으로 나눴는지 알려 주는 수가 '엄마', 그 엄마에게서 나온 조각 중 몇 개인지가 '아이'예요.</p>
+        <div class="obox" id="o3-box">
+          <p style="margin-top:0" id="o3-q"></p>
+          <div class="bar tt" id="o3-bar"></div>
+          <div class="grid2" style="margin-top:14px;gap:10px">
+            <div><b>👩 분모(엄마 수)는?</b><div class="row" id="o3-d" style="gap:6px;margin-top:6px"></div></div>
+            <div><b>👧 분자(아이 수)는?</b><div class="row" id="o3-u" style="gap:6px;margin-top:6px"></div></div>
+          </div>
+          <div class="row" style="margin-top:12px"><button class="btn" id="o3-check">확인하기</button><button class="btn ghost" id="o3-new">다른 문제 →</button></div>
+          <div class="msg" id="o3-msg"></div>
+        </div>
+        <div class="ores" id="o3-res" hidden>
+          <span class="tag so">그래서?</span>
+          <div class="lfrac" id="o3-lfrac"></div>
+          <p>분수의 두 수는 아무렇게나 쓴 게 아니라, <b>"전체를 몇으로 나눴나(엄마)"</b>와 <b>"그중 몇 개인가(아이)"</b>라는 뜻을 담고 있어요.</p>
+          <div class="fact">📜 『구장산술』에는 분수를 더 간단하게 만드는 <b>약분</b> 방법도 나와요. <button class="link" data-go="frac" data-tab="b">② 크기가 같은 분수에서 해 보기 →</button></div>
+        </div>
+      </div>
+
+      <!-- 5. 가로선의 탄생 -->
+      <div class="ocp" data-p="4" hidden>
+        <p class="ostory"><span class="tag why">문제 상황</span> 나라마다 분수를 쓰는 모양이 달라서 서로 알아보기 어려웠어요. 오늘날의 <b>3/4</b> 모양은 여러 나라를 거치며 천천히 만들어졌어요. 카드를 눌러 시대별로 3/4을 어떻게 썼는지 살펴보세요.</p>
+        <div class="ncards" id="o4-cards"></div>
+        <div class="nshow" id="o4-show"></div>
+        <div class="ores" id="o4-res" hidden>
+          <span class="tag so">그래서?</span>
+          <p>모양은 달라도 생각은 같았어요. <b>전체를 똑같이 나누고, 그중 몇 개인지 센다.</b></p>
+          <p>그리고 가운데 가로선(─)은 <b>나누기(÷)</b>와 같은 뜻이에요. 빵 3개를 4명이 나눈 답이 3/4이었던 것도 그래서예요. <b>3 ÷ 4 = 3/4</b></p>
+          <button class="btn ghost" data-go="frac" data-tab="c">③ 분수 = 나눗셈 실험해 보기 →</button>
+        </div>
+      </div>
+
+      <!-- 6. 정리하기 -->
+      <div class="ocp" data-p="5" hidden>
+        <p class="ostory">지금까지의 이야기를 하나로 이어 볼까요?</p>
+        <div class="connect">
+          <span class="node">🍞 똑같이 나눠야 했다</span><span class="cmarr">→</span>
+          <span class="node">📏 1보다 작은 양이 남았다</span><span class="cmarr">→</span>
+          <span class="node">✂️ 기준(1)을 똑같이 쪼개 조각을 셌다</span><span class="cmarr">→</span>
+          <span class="node">👩‍👧 분모·분자라는 이름을 붙였다</span><span class="cmarr">→</span>
+          <span class="node" style="border-color:var(--pri)">✍️ 3/4처럼 쓰게 되었다</span>
+        </div>
+        <div class="msg good" style="border-style:solid">💡 <b>한 줄 정리:</b> 분수는 <b>1, 2, 3으로는 말할 수 없는 '남는 양'</b>을 나타내려고 생겨났어요. 기준을 <b>똑같이</b> 나누고, 그중 <b>몇 개</b>인지 세는 수예요.</div>
+        <h3 style="margin-top:18px">🗣️ 내 말로 설명하기</h3>
+        <p style="margin-top:0">친구가 "<b>분수는 왜 생긴 거야?</b>" 하고 물어요. 오늘 본 이야기로 설명해 주세요.</p>
+        <textarea id="oy-text" placeholder="예) 옛날 사람들이 빵을 …"></textarea>
+        <div class="row" style="margin-top:8px"><button class="btn" id="oy-check">내 설명 점검하기</button></div>
+        <div id="oy-out"></div>
+        <h3 style="margin-top:18px">🔭 분수는 앞으로 어디로 이어질까?</h3>
+        <div class="connect">
+          <span class="node" style="border-color:var(--pri)">분수</span><span class="cmarr">→</span>
+          <span class="node">소수<small>1/10, 1/100 조각</small></span><span class="cmarr">→</span>
+          <span class="node">비와 비율 · 백분율<small>6학년</small></span><span class="cmarr">→</span>
+          <span class="node">정비례 · 함수<small>중학교</small></span>
+        </div>
+      </div>
+
+      <div class="scnav"><button class="btn ghost" id="oc-prev">← 이전 이야기</button><button class="btn" id="oc-next">다음 →</button></div>
+    </div>
+  </div>
+
+  <!-- Tab A -->
+  <div id="tab-a" class="fpanel" hidden>
+    <div class="grid2">
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <b>피자를 몇 조각으로 나눌까요?</b>
+          <div class="stepper"><button id="fa-minus" aria-label="조각 줄이기">−</button><span id="fa-n">4</span><button id="fa-plus" aria-label="조각 늘리기">+</button></div>
+        </div>
+        <div id="fa-pizza" style="margin-top:12px"></div>
+        <div class="row" style="justify-content:center;margin-top:10px">
+          <button class="btn ghost" id="fa-all">모두 고르기</button>
+          <button class="btn ghost" id="fa-clear">비우기</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sub" style="text-align:center">내가 고른 양</div>
+        <div class="bigfrac" id="fa-frac"></div>
+        <div style="text-align:center" id="fa-words"></div>
+        <div style="margin-top:14px"><div class="sub" style="font-size:13px">막대로 보면</div><div class="bar" id="fa-bar"></div></div>
+        <div style="margin-top:10px"><div class="sub" style="font-size:13px">수직선에서는 (0과 1 사이 어디쯤?)</div><div id="fa-nl"></div></div>
+        <div class="msg" id="fa-msg"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🔍 분모가 커지면 한 조각은 어떻게 될까?</h3>
+      <div class="sub" style="margin-bottom:8px">위에서 조각 수를 바꿔 보세요. 주황색 막대가 지금 피자 한 조각의 크기예요.</div>
+      <div id="fa-unit"></div>
+      <div class="msg">💡 <b>발견!</b> 똑같이 나누는 조각 수(분모)가 많을수록 한 조각은 작아져요. 그래서 1/2이 1/8보다 커요.</div>
+    </div>
+  </div>
+
+  <!-- Tab B -->
+  <div id="tab-b" class="fpanel" hidden>
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <h3 style="margin:0">🎯 목표 <span id="fb-target" style="font-size:24px;color:#2f6fd0"></span> 와 크기가 같은 분수를 만들어 보세요</h3>
+        <button class="btn ghost" id="fb-next">다른 문제 →</button>
+      </div>
+      <p class="sub">오른쪽 피자의 조각 수를 바꾸고, 왼쪽 파란 부분과 같은 양이 되도록 조각을 골라요.</p>
+      <div class="vs">
+        <div><div class="sub">목표</div><div id="fb-left"></div></div>
+        <div class="eqsign">=?</div>
+        <div><div class="sub">내 피자 <span id="fb-mine" style="font-size:20px;color:#d4541c"></span></div><div id="fb-right"></div></div>
+      </div>
+      <div style="margin-top:12px"><div class="sub" style="font-size:13px;margin-bottom:6px">내 피자를 몇 조각으로 나눌까요?</div><div class="row" id="fb-dens" style="gap:6px"></div></div>
+      <div style="margin-top:14px" id="fb-bars"></div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="fb-check">크기가 같을까? 확인!</button><button class="btn ghost" id="fb-clear">비우기</button></div>
+      <div class="msg" id="fb-msg"></div>
+      <div style="margin-top:10px;font-weight:700" id="fb-found"></div>
+    </div>
+  </div>
+
+  <!-- Tab C -->
+  <div id="tab-c" class="fpanel" hidden>
+    <div class="card">
+      <h3>🧪 피자를 친구들과 똑같이 나눠 먹으면?</h3>
+      <div class="row" style="gap:18px">
+        <div class="row"><b>피자</b><div class="stepper"><button data-fc="p-" aria-label="피자 줄이기">−</button><span id="fc-p">3</span><button data-fc="p+" aria-label="피자 늘리기">+</button></div><b>판</b></div>
+        <div class="row"><b>친구</b><div class="stepper"><button data-fc="k-" aria-label="친구 줄이기">−</button><span id="fc-k">4</span><button data-fc="k+" aria-label="친구 늘리기">+</button></div><b>명</b></div>
+      </div>
+      <p class="sub" style="margin-bottom:0">피자 한 판을 친구 수만큼 똑같이 잘라서, 같은 색 조각을 같은 친구가 가져가요.</p>
+      <div class="pizzas" id="fc-pizzas"></div>
+      <div class="kids" id="fc-kids"></div>
+      <div class="eq" id="fc-eq"></div>
+      <div style="text-align:center" class="sub" id="fc-note"></div>
+      <div class="msg">💡 <b>연결 고리:</b> 분수의 가로 막대(─)는 사실 <b>나누기(÷)</b>와 같은 뜻이에요. 3 ÷ 4 = 3/4. 그래서 6학년에서 배우는 <b>비율</b>도 분수로 나타낼 수 있어요.</div>
+      <div class="connect" style="margin-top:12px"><span class="node">나눗셈</span><span class="cmarr">→</span><span class="node" style="border-color:var(--pri)">분수</span><span class="cmarr">→</span><span class="node">비와 비율</span><span class="cmarr">→</span><span class="node">정비례 · 함수</span></div>
+    </div>
+  </div>
+
+  <div class="card" id="ex-card" hidden>
+    <h3>🗣️ 내 말로 설명하기</h3>
+    <p style="margin-top:0">동생이 "<b>3/4</b>이 뭐야?" 하고 물어요. 피자를 이용해서 설명해 주세요.</p>
+    <textarea id="ex-text" placeholder="예) 피자를 …"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn" id="ex-check">내 설명 점검하기</button></div>
+    <div id="ex-out"></div>
+    <p class="note">체험판은 핵심 단어로만 점검해요. 정식 버전에서는 AI 선생님이 설명을 읽고 대화로 피드백할 계획이에요.</p>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="hist" class="view" hidden>
+  <h2>🏯 고조선부터 남북국까지, 흐름으로 보기</h2>
+  <div class="sub" style="margin-bottom:12px">사건을 하나씩 외우지 말고 <b>왜? → 무슨 일이? → 그래서? → 다음 장면으로</b> 이어 보세요.</div>
+  <div class="erabar" id="era-bar"></div>
+  <div class="hgrid">
+    <div class="card" style="margin:0">
+      <div id="sc-head"></div>
+      <div id="sc-chain"></div>
+      <div class="scnav"><button class="btn ghost" id="sc-prev">← 이전 장면</button><button class="btn ghost" id="sc-all">모두 펼치기</button><button class="btn" id="sc-next">다음 장면 →</button></div>
+    </div>
+    <div>
+      <div class="card" style="margin:0">
+        <h3 style="margin-bottom:6px">🗺️ 세력 지도</h3>
+        <div id="sc-map"></div>
+        <div class="legend" id="sc-legend"></div>
+        <p class="note" style="text-align:center;margin:4px 0 0">이해를 돕기 위해 간단히 그린 그림이에요. 실제 국경과는 달라요.</p>
+        <div class="world" id="sc-world"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>🌊 흐름 한눈에 보기: 한강을 차지한 나라가 주인공!</h3>
+    <div class="hanflow">
+      <div class="hf" style="background:#cfe0fb">4세기<br>백제<small>근초고왕</small></div><span class="cmarr">→</span>
+      <div class="hf" style="background:#fbd3d2">5세기<br>고구려<small>장수왕</small></div><span class="cmarr">→</span>
+      <div class="hf" style="background:#fbe6b5">6세기<br>신라<small>진흥왕</small></div><span class="cmarr">→</span>
+      <div class="hf" style="background:#fbe6b5">7세기<br>신라의 삼국 통일<small>676년</small></div>
+    </div>
+    <div class="msg" style="border-style:solid">
+      🔗 <b>연결 질문:</b> 6세기에 신라가 한강을 차지한 일은, 7세기 삼국 통일과 어떻게 이어질까요?
+      <div style="margin-top:8px"><button class="btn ghost" id="cq-btn">생각해 본 뒤 답 보기</button></div>
+      <div id="cq-ans" hidden style="margin-top:10px">
+        <div class="connect"><span class="node">신라가 한강 차지</span><span class="cmarr">→</span><span class="node">서해 바닷길로 중국과 직접 교류</span><span class="cmarr">→</span><span class="node">당나라와 동맹(648)</span><span class="cmarr">→</span><span class="node">백제·고구려 멸망</span><span class="cmarr">→</span><span class="node">삼국 통일(676)</span></div>
+        <p style="margin:8px 0 0">한강은 단순한 강이 아니라 <b>중국으로 가는 길</b>이었어요. 이 길이 있었기에 신라는 당나라와 손잡을 수 있었어요.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>🧩 순서 맞히기</h3>
+      <p class="sub" style="margin-top:0">먼저 일어난 일부터 차례로 눌러 보세요.</p>
+      <div id="sq-items"></div>
+      <div class="msg" id="sq-msg"></div>
+      <button class="btn ghost" id="sq-reset" style="margin-top:10px">다시 섞기</button>
+    </div>
+    <div class="card">
+      <h3>❓ 왜 그랬을까?</h3>
+      <p style="margin-top:0"><b>세 나라가 모두 한강을 차지하려고 한 까닭으로 알맞은 것을 모두 골라 보세요.</b></p>
+      <div id="wq-opts"></div>
+      <button class="btn" id="wq-check" style="margin-top:6px">확인하기</button>
+      <div class="msg" id="wq-msg"></div>
+    </div>
+  </div>
+</section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const F=(n,d)=>`<span class="frac"><span>${n}</span><span>${d}</span></span>`;
+
+/* ---------- stars ---------- */
+const STARS={om:'남은 길이를 분수로 재기',oe:'이집트 방식으로 빵 나누기',on:'분모·분자 이름 맞히기',oy:'분수가 생긴 까닭 설명하기',fa:'n/n = 1 발견하기',fb:'크기가 같은 분수 찾기',fc:'분수 = 나눗셈 실험하기',ex:'내 말로 설명하기',hall:'역사 장면 8개 모두 보기',hsort:'사건 순서 맞히기',hwhy:'한강 질문 풀기'};
+const done=new Set();
+function mark(k){if(done.has(k))return;done.add(k);updateStars();toast(`⭐ 별 획득! ${STARS[k]}`);}
+function updateStars(){$('#stars').textContent=`⭐ ${done.size} / ${Object.keys(STARS).length}`;
+  $('#record').innerHTML=Object.entries(STARS).map(([k,v])=>`<li class="${done.has(k)?'ok':''}">${done.has(k)?'⭐':'☆'} ${v}</li>`).join('');}
+let tT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2300);}
+
+/* ---------- navigation ---------- */
+function go(view,tab){
+  $$('.view').forEach(v=>v.hidden=v.id!==view);
+  $$('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.go===view));
+  if(view==='frac'&&tab)setTab(tab);
+  if(view==='hist'&&tab!==undefined)setScene(+tab);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go,g.dataset.tab);});
+function setTab(t){setTimeout(()=>centerOn($('.tabs')),0);$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.ftab===t));['o','a','b','c'].forEach(x=>$('#tab-'+x).hidden=x!==t);$('#ex-card').hidden=t==='o';}
+$$('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.ftab)));
+
+/* ---------- pizza ---------- */
+function slicePath(cx,cy,r,i,n){
+  if(n===1)return `M ${cx} ${cy-r} A ${r} ${r} 0 1 1 ${cx-0.01} ${cy-r} Z`;
+  const a0=i/n*2*Math.PI-Math.PI/2,a1=(i+1)/n*2*Math.PI-Math.PI/2;
+  const p=v=>v.toFixed(2);
+  return `M ${cx} ${cy} L ${p(cx+r*Math.cos(a0))} ${p(cy+r*Math.sin(a0))} A ${r} ${r} 0 ${(a1-a0)>Math.PI?1:0} 1 ${p(cx+r*Math.cos(a1))} ${p(cy+r*Math.sin(a1))} Z`;
+}
+function pizza({n,fill,size=240,click=false,pep=true,label='피자'}){
+  const c=size/2,r=size/2-12;
+  let s=`<svg viewBox="0 0 ${size} ${size}" class="pizza${click?' click':''}" role="group" aria-label="${label}">`;
+  s+=`<circle cx="${c}" cy="${c}" r="${r+8}" fill="#e3a65b" stroke="#c98b4a" stroke-width="2"/>`;
+  for(let i=0;i<n;i++){
+    const f=fill(i);
+    s+=`<path class="slice" d="${slicePath(c,c,r,i,n)}" fill="${f||'#fff1d0'}" stroke="#c98b4a" stroke-width="2" data-i="${i}"${click?` tabindex="0" role="button" aria-pressed="${!!f}" aria-label="${i+1}번째 조각"`:''}/>`;
+    if(f&&pep){const a=(i+.5)/n*2*Math.PI-Math.PI/2,rr=n===1?0:r*.58,pr=Math.max(4,Math.min(13,r*Math.PI/n*.3));
+      s+=`<circle cx="${(c+rr*Math.cos(a)).toFixed(1)}" cy="${(c+rr*Math.sin(a)).toFixed(1)}" r="${pr.toFixed(1)}" fill="#c8402f" opacity=".85" pointer-events="none"/>`;}
+  }
+  return s+'</svg>';
+}
+function bindPizza(el,fn){
+  el.addEventListener('click',e=>{const p=e.target.closest('[data-i]');if(p)fn(+p.dataset.i);});
+  el.addEventListener('keydown',e=>{const i=e.target.dataset&&e.target.dataset.i;if((e.key==='Enter'||e.key===' ')&&i!==undefined){e.preventDefault();fn(+i);const q=el.querySelector(`[data-i="${i}"]`);if(q)q.focus();}});
+}
+
+/* ---------- Tab A ---------- */
+const FA={n:4,sel:new Set()};
+function numberLine(k,n){
+  const x0=24,x1=296,X=v=>(x0+(x1-x0)*v).toFixed(1);
+  let s=`<svg viewBox="0 0 320 74" class="nl" role="img" aria-label="수직선 위 ${k}/${n}의 위치">`;
+  s+=`<line x1="${x0}" y1="42" x2="${x1}" y2="42" stroke="#2b2d42" stroke-width="3" stroke-linecap="round"/>`;
+  for(let i=0;i<=n;i++){const e=i===0||i===n;s+=`<line x1="${X(i/n)}" y1="${e?33:36}" x2="${X(i/n)}" y2="${e?51:48}" stroke="#2b2d42" stroke-width="2"/>`;}
+  s+=`<text x="${x0}" y="68" text-anchor="middle" font-size="13">0</text><text x="${x1}" y="68" text-anchor="middle" font-size="13">1</text>`;
+  const x=+X(k/n);
+  s+=`<polygon points="${x-7},21 ${x+7},21 ${x},31" fill="#ff7a45"/><text x="${x}" y="16" text-anchor="middle" font-size="13" font-weight="800" fill="#d4541c">${k}/${n}</text>`;
+  return s+'</svg>';
+}
+function renderFA(){
+  const{n,sel}=FA,k=sel.size;
+  $('#fa-n').textContent=n;
+  $('#fa-pizza').innerHTML=pizza({n,fill:i=>sel.has(i)?'#ffa94d':null,click:true,size:280,label:`${n}조각으로 나눈 피자. 조각을 눌러 고르세요`});
+  $('#fa-frac').innerHTML=F(k,n);
+  $('#fa-words').innerHTML=`피자 한 판을 <b>똑같이 ${n}조각</b>으로 나눈 것 중 <b>${k}조각</b>`;
+  const bar=$('#fa-bar');bar.style.setProperty('--n',n);
+  bar.innerHTML=Array.from({length:n},(_,i)=>`<span class="${i<k?'on':''}"></span>`).join('');
+  $('#fa-nl').innerHTML=numberLine(k,n);
+  let m;
+  if(k===0)m='🍕 피자 조각을 눌러서 먹고 싶은 만큼 골라 보세요.';
+  else if(k===n){m=`🎉 모두 골랐어요! 피자 한 판 전체 = ${F(n,n)} = <b>1</b> 이에요.`;mark('fa');}
+  else{const g=gcd(k,n);m=`지금 고른 양은 ${F(1,n)} 조각이 <b>${k}개</b> 모인 거예요.`;
+    if(g>1)m+=`<br>💡 그런데 ${F(k,n)} = ${F(k/g,n/g)} — 크기가 똑같아요! <button class="link" data-go="frac" data-tab="b">크기가 같은 분수 알아보기 →</button>`;}
+  $('#fa-msg').innerHTML=m;
+  $('#fa-unit').innerHTML=Array.from({length:11},(_,j)=>{const d=j+2;return `<div class="urow${d===n?' cur':''}"><span class="ul">1/${d}</span><span class="ut"><span class="ub" style="width:${(100/d).toFixed(2)}%"></span></span></div>`;}).join('');
+}
+$('#fa-minus').onclick=()=>{if(FA.n>1){FA.n--;FA.sel.clear();renderFA();}};
+$('#fa-plus').onclick=()=>{if(FA.n<12){FA.n++;FA.sel.clear();renderFA();}};
+$('#fa-all').onclick=()=>{for(let i=0;i<FA.n;i++)FA.sel.add(i);renderFA();};
+$('#fa-clear').onclick=()=>{FA.sel.clear();renderFA();};
+bindPizza($('#fa-pizza'),i=>{FA.sel.has(i)?FA.sel.delete(i):FA.sel.add(i);renderFA();});
+
+/* ---------- Tab B ---------- */
+const TG=[[1,2],[1,3],[2,3],[1,4],[3,4],[2,5]];
+const FB={t:0,n:4,sel:new Set(),found:TG.map(()=>[])};
+function cmpBar(k,n,c,l){return `<div class="cmp"><span class="cl">${l}</span><div class="cb" style="--n:${n}">${Array.from({length:n},(_,i)=>`<span style="${i<k?'background:'+c:''}"></span>`).join('')}</div></div>`;}
+function renderFB(){
+  const[tn,td]=TG[FB.t],{n,sel}=FB,k=sel.size;
+  $('#fb-target').innerHTML=F(tn,td);
+  $('#fb-left').innerHTML=pizza({n:td,fill:i=>i<tn?'#7fb2f0':null,size:210,pep:false,label:`목표 ${tn}/${td}`});
+  $('#fb-right').innerHTML=pizza({n,fill:i=>sel.has(i)?'#ffa94d':null,click:true,size:210,label:`${n}조각 피자. 조각을 눌러 고르세요`});
+  $('#fb-mine').innerHTML=F(k,n);
+  $('#fb-dens').innerHTML=Array.from({length:11},(_,j)=>{const d=j+2;return `<button class="chip${d===n?' on':''}" data-den="${d}">${d}조각</button>`;}).join('');
+  $('#fb-bars').innerHTML=cmpBar(tn,td,'#7fb2f0','목표')+cmpBar(k,n,'#ffa94d','내 피자');
+  const f=FB.found[FB.t];
+  $('#fb-found').innerHTML=f.length?`🏅 찾은 같은 분수: ${f.map(([a,b])=>F(a,b)).join(' , ')} <span class="sub" style="font-weight:600">— 또 있을까요?</span>`:'';
+}
+function resetMsgB(){const m=$('#fb-msg');m.innerHTML='';m.className='msg';}
+function checkFB(){
+  const[tn,td]=TG[FB.t],n=FB.n,k=FB.sel.size,m=$('#fb-msg');let h,good=false;
+  if(!k)h='먼저 오른쪽 피자에서 조각을 골라 주세요.';
+  else if(k*td===tn*n){
+    if(n===td)h='그건 목표와 똑같은 분수예요 😊 조각 수(분모)를 바꿔서 같은 크기를 만들어 볼까요?';
+    else{good=true;
+      if(n>td){const x=n/td;h=`🎉 정답! ${F(tn,td)} = ${F(k,n)}<br>피자를 ${x}배 더 잘게 자르면, 같은 양을 만드는 조각 수도 ${x}배가 돼요.<br><b>분모와 분자에 같은 수(×${x})를 곱해도 크기는 그대로!</b>`;}
+      else{const x=td/n;h=`🎉 정답! ${F(tn,td)} = ${F(k,n)}<br>작은 조각 ${x}개를 합치면 큰 조각 1개가 돼요.<br><b>분모와 분자를 같은 수(÷${x})로 나눠도 크기는 그대로!</b> 5학년에서는 이걸 '약분'이라고 불러요.`;}
+      if(!FB.found[FB.t].some(([,b])=>b===n))FB.found[FB.t].push([k,n]);
+      mark('fb');}
+  }else if((tn*n)%td!==0)h=`🤔 ${n}조각 피자로는 딱 맞게 만들 수 없어요. 아래 막대를 보면 칸의 경계가 목표와 맞지 않죠? ${td}의 배수(${td*2}, ${td*3}…)만큼 나눠 보세요.`;
+  else h=k*td>tn*n?'🤏 조금 많아요! 아래 두 막대의 끝을 비교해 보세요.':'🍕 조금 적어요! 아래 두 막대의 끝을 비교해 보세요.';
+  m.innerHTML=h;m.className='msg'+(good?' good':'');
+  renderFB();
+  if(!good){m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');}
+}
+$('#fb-dens').addEventListener('click',e=>{const b=e.target.closest('[data-den]');if(b){FB.n=+b.dataset.den;FB.sel.clear();resetMsgB();renderFB();}});
+bindPizza($('#fb-right'),i=>{FB.sel.has(i)?FB.sel.delete(i):FB.sel.add(i);resetMsgB();renderFB();});
+$('#fb-check').onclick=checkFB;
+$('#fb-clear').onclick=()=>{FB.sel.clear();resetMsgB();renderFB();};
+$('#fb-next').onclick=()=>{FB.t=(FB.t+1)%TG.length;FB.sel.clear();resetMsgB();renderFB();};
+
+/* ---------- Tab C ---------- */
+const KC=['#ff8c42','#4f8fea','#22a39f','#e0a21b','#9b72cf','#ef6f6c'];
+const KN=['🐻 곰돌이','🐰 토순이','🐶 멍멍이','🐱 야옹이','🦊 여우','🐼 판다'];
+const FC={p:3,k:4,touched:0};
+function renderFC(){
+  const{p,k}=FC;$('#fc-p').textContent=p;$('#fc-k').textContent=k;
+  $('#fc-pizzas').innerHTML=Array.from({length:p},(_,x)=>pizza({n:k,fill:i=>KC[i],size:130,pep:false,label:`${x+1}번째 피자, ${k}조각`})).join('');
+  $('#fc-kids').innerHTML=Array.from({length:k},(_,j)=>`<div class="kid" style="--c:${KC[j]}"><div>${KN[j]}</div><div class="sub">조각 ${p}개</div><b>${F(p,k)}판</b></div>`).join('');
+  const w=Math.floor(p/k),r=p%k;
+  $('#fc-eq').innerHTML=`${p} ÷ ${k} = ${F(p,k)}`+(p>=k?` = ${r===0?w:`${w}과 ${F(r,k)}`}`:'');
+  $('#fc-note').innerHTML=p<k?'한 명이 한 판보다 적게 먹어요. 그래서 1보다 작은 분수가 나왔어요.':p===k?`한 명이 딱 한 판씩! ${F(k,k)} = 1`:'한 명이 한 판보다 많이 먹어요. 그래서 1보다 큰 분수(가분수)가 나왔어요.';
+}
+$$('[data-fc]').forEach(b=>b.addEventListener('click',()=>{
+  const a=b.dataset.fc;
+  if(a==='p+'&&FC.p<6)FC.p++;else if(a==='p-'&&FC.p>1)FC.p--;else if(a==='k+'&&FC.k<6)FC.k++;else if(a==='k-'&&FC.k>2)FC.k--;else return;
+  renderFC();if(++FC.touched>=2)mark('fc');
+}));
+
+/* ---------- explain ---------- */
+$('#ex-check').onclick=()=>{
+  const t=$('#ex-text').value,o=$('#ex-out');
+  if(t.trim().length<6){o.innerHTML='<div class="msg">조금 더 길게 써 볼까요? 피자를 어떻게 나누는지부터 시작해 보세요.</div>';return;}
+  const c=[[/똑같|같은 ?크기|균등|같게|고르게/,'똑같은 크기로 나눈다는 점'],[/4|넷|네 ?(개|조각|등분|명)|사등분/,'전체를 4조각으로 나눈다는 점 (분모 4)'],[/3|셋|세 ?(개|조각)/,'그중 3조각을 뜻한다는 점 (분자 3)']];
+  const r=c.map(([re,l])=>[re.test(t),l]),all=r.every(x=>x[0]);
+  o.innerHTML=`<ul class="checks">${r.map(([ok,l])=>`<li class="${ok?'ok':''}">${ok?'✅':'⬜'} ${l}</li>`).join('')}</ul><div class="msg${all?' good':''}">${all?'🎉 완벽한 설명이에요! 동생도 바로 이해하겠어요.':'좋아요! ⬜ 표시된 부분을 넣어서 한 번 더 써 볼까요?'}</div>`;
+  if(all)mark('ex');
+};
+
+/* ---------- origin story ---------- */
+const OC=[
+ {emoji:'🤔',name:'수가 모자라!',when:'아주 먼 옛날',title:'1, 2, 3만으로는 나눌 수 없었어요'},
+ {emoji:'📏',name:'재다 보니 남았다',when:'4,000여 년 전 · 고대 이집트',title:'땅을 재다가 남은 한 조각'},
+ {emoji:'🍞',name:'이집트의 빵 나누기',when:'약 3,600년 전 · 린드 파피루스',title:'빵 3개를 4명에게 나누는 법'},
+ {emoji:'👩‍👧',name:'분모와 분자',when:'약 2,000년 전 · 옛 중국',title:'엄마 수와 아이 수'},
+ {emoji:'✍️',name:'가로선의 탄생',when:'이집트 → 인도 → 아랍 → 유럽',title:'3/4이라고 쓰기까지'},
+ {emoji:'🔗',name:'이어서 정리하기',when:'그리고 지금, 우리',title:'분수는 왜 생겼을까?'}
+];
+const OD=new Set(),OV=new Set([0]);let OI=0;
+function ocDone(i){OD.add(i);renderOCBar();}
+function setOC(i){OI=Math.max(0,Math.min(OC.length-1,i));OV.add(OI);renderOC();}
+function centerOn(bar){const on=bar.querySelector('.on');if(!on||bar.scrollWidth<=bar.clientWidth)return;bar.scrollTo({left:on.offsetLeft-bar.offsetLeft-(bar.clientWidth-on.offsetWidth)/2,behavior:'smooth'});}
+function renderOCBar(){$('#oc-bar').innerHTML=OC.map((c,i)=>`<button class="era${i===OI?' on':''}${OV.has(i)?' seen':''}" data-oc="${i}" aria-label="${i+1}. ${c.name}"><span>${OD.has(i)?'✅':c.emoji}</span><small>${i+1}. ${c.name}</small></button>`).join('');centerOn($('#oc-bar'));}
+function renderOC(){
+  renderOCBar();
+  const c=OC[OI];
+  $('#oc-head').innerHTML=`<span class="yrs">${c.when}</span><h2>${c.emoji} ${c.title}</h2>`;
+  $$('.ocp').forEach(p=>p.hidden=+p.dataset.p!==OI);
+  const pv=$('#oc-prev');pv.disabled=OI===0;pv.style.visibility=OI===0?'hidden':'visible';
+  $('#oc-next').textContent=OI<OC.length-1?`다음 이야기: ${OC[OI+1].name} →`:'🍕 이제 피자로 직접 만져 보기 →';
+}
+$('#oc-bar').addEventListener('click',e=>{const b=e.target.closest('[data-oc]');if(b){setOC(+b.dataset.oc);}});
+$('#oc-prev').onclick=()=>{setOC(OI-1);$('#oc-head').scrollIntoView({behavior:'smooth',block:'center'});};
+$('#oc-next').onclick=()=>{if(OI<OC.length-1){setOC(OI+1);$('#oc-head').scrollIntoView({behavior:'smooth',block:'center'});}else{setTab('a');window.scrollTo({top:0,behavior:'smooth'});}};
+
+/* chapter 1 */
+const O0MSG=['😢 그러면 오늘 빵을 못 먹는 일꾼이 생겨요. 공평하지 않아요!','😅 빵이 언제나 넉넉하진 않았어요. 지금 있는 빵 3개로 나눠야 해요.'];
+$('#o0-opts').addEventListener('click',e=>{
+  const b=e.target.closest('[data-o0]');if(!b)return;const i=+b.dataset.o0;
+  $$('#o0-opts .choice').forEach(x=>x.classList.remove('right','wrong'));
+  const m=$('#o0-msg');
+  if(i===2){b.classList.add('right');m.innerHTML='🎉 맞아요! 빵을 <b>잘라서</b> 나눠야 해요. 그런데 잘라 놓고 보니 새로운 문제가 생겼어요…';m.className='msg good';$('#o0-res').hidden=false;ocDone(0);}
+  else{b.classList.add('wrong');m.innerHTML=O0MSG[i];m.className='msg';m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');}
+});
+
+/* chapter 2 */
+const O1={m:0,over:false,n:0};
+function renderO1(){
+  const U=180,x0=20,W=2.75*U,{m,over,n}=O1,sx=x0+2*U;
+  let s=`<svg viewBox="0 0 580 150" class="svgw" role="img" aria-label="밭의 길이를 큐빗 막대로 재는 그림">`;
+  s+=`<text x="${x0}" y="13" font-size="12" font-weight="700" fill="#4d7a33">🌾 밭의 한쪽 길이</text>`;
+  s+=`<rect x="${x0}" y="18" width="${W}" height="30" rx="4" fill="#cfe8b0" stroke="#7aa35a" stroke-width="2"/>`;
+  for(let i=0;i<m;i++)s+=`<rect x="${x0+i*U}" y="58" width="${U}" height="26" fill="${i%2?'#7fa9ee':'#a9c6f5'}" stroke="#2b2d42" stroke-width="1.5"/><text x="${x0+i*U+U/2}" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#2b2d42">1큐빗</text>`;
+  if(m===0)s+=`<text x="${x0}" y="76" font-size="12" fill="#6b6f80">아래 버튼을 눌러 큐빗 막대를 대 보세요 ↓</text>`;
+  if(over&&!n)s+=`<rect x="${sx}" y="58" width="${U}" height="26" fill="#fdeeee" stroke="#e0665a" stroke-width="2" stroke-dasharray="6 4"/><text x="${sx+U/2}" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="#c0392b">넘쳐요!</text><line x1="${x0+W}" y1="14" x2="${x0+W}" y2="90" stroke="#c0392b" stroke-width="2"/>`;
+  if(n){const w=U/n,fit=Math.floor(3*n/4+1e-9);
+    for(let i=0;i<fit;i++)s+=`<rect x="${(sx+i*w).toFixed(1)}" y="58" width="${w.toFixed(1)}" height="26" fill="#ffa94d" stroke="#2b2d42" stroke-width="1.5"/>`;
+    const lx=sx+fit*w,rx=x0+W;
+    if(rx-lx>0.5)s+=`<rect x="${lx.toFixed(1)}" y="58" width="${(rx-lx).toFixed(1)}" height="26" fill="#f7b9b2" stroke="#e0665a" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+    s+=`<text x="${sx-8}" y="125" text-anchor="end" font-size="12" font-weight="700" fill="#6b6f80">큐빗 막대를 똑같이 ${n}조각으로 →</text>`;
+    for(let i=0;i<n;i++)s+=`<rect x="${(sx+i*w).toFixed(1)}" y="106" width="${w.toFixed(1)}" height="24" fill="${i<fit?'#ffa94d':'#fff'}" stroke="#2b2d42" stroke-width="1.5"/>`;
+    s+=`<text x="${sx+U/2}" y="145" text-anchor="middle" font-size="11" fill="#6b6f80">1큐빗</text>`;}
+  $('#o1-svg').innerHTML=s+'</svg>';
+  $('#o1-chips').innerHTML=Array.from({length:7},(_,j)=>{const d=j+2;return `<button class="chip${d===n?' on':''}" data-o1="${d}">${d}조각</button>`;}).join('');
+}
+$('#o1-lay').onclick=()=>{
+  const m=$('#o1-msg');m.className='msg';
+  if(O1.m<2){O1.m++;m.innerHTML=O1.m===1?'📏 1큐빗! 아직 한참 남았어요. 한 번 더!':'📏 2큐빗! 그래도 조금 남았네요. 한 번 더 대 볼까요?';}
+  else{O1.over=true;m.innerHTML='😮 앗, 막대가 밭 끝을 넘어가요! 이 밭은 <b>2큐빗 하고 1큐빗보다 짧은 부분</b>이 남아요. 남은 부분은 몇 큐빗이라고 말해야 할까요?';$('#o1-step1').hidden=true;$('#o1-step2').hidden=false;}
+  renderO1();
+};
+$('#o1-chips').addEventListener('click',e=>{
+  const b=e.target.closest('[data-o1]');if(!b)return;const n=+b.dataset.o1;O1.n=n;renderO1();
+  const fit=Math.floor(3*n/4+1e-9),exact=(3*n)%4===0,m=$('#o1-msg');
+  if(exact){m.innerHTML=`🎉 딱 맞았어요! 큐빗 막대를 <b>똑같이 ${n}조각</b>으로 나눈 것 중 <b>${fit}조각</b> → ${F(fit,n)}큐빗`+(n!==4?`<br>💡 4조각으로 나눈 것 중 3조각(${F(3,4)})과 길이가 같아요!`:'');m.className='msg good';
+    $('#o1-res').hidden=false;ocDone(1);mark('om');}
+  else{m.innerHTML=`🤏 ${F(1,n)}큐빗 조각을 ${fit}개 놓았더니, 아직 빨간 부분이 조금 남아요. 다른 수로 나눠 볼까요?`;m.className='msg';}
+});
+
+/* chapter 3 */
+const O2={st:0};
+const O2BTN=['✂️ 빵 3개를 모두 반으로 자르기','🤲 반쪽을 한 사람에게 1개씩 나눠 주기','✂️ 남은 반쪽 2개를 다시 반으로 자르기','🤲 작은 조각을 한 사람에게 1개씩 나눠 주기'];
+const O2MSG=['한 사람에게 빵 1개씩 주기에는 빵이 모자라요. 먼저 빵을 잘라 볼까요?','✂️ 반쪽이 6개 생겼어요. 이집트 사람들은 이걸 1/2이라고 불렀어요.','🤲 4명이 반쪽(1/2)을 1개씩 받았어요. 반쪽 2개가 남았네요.','✂️ 반쪽을 또 반으로 자르니 작은 조각 4개가 생겼어요. 빵 1개를 4조각 낸 크기(1/4)예요.','🎉 4명이 모두 똑같이 나눠 가졌어요! 남은 빵은 하나도 없어요.'];
+function o2pieces(){const st=O2.st,L=[];
+  for(let l=0;l<3;l++){
+    if(st===0){L.push([[0,1,-1]]);continue;}
+    if(l<2){L.push([[0,.5,st>=2?l*2:-1],[.5,1,st>=2?l*2+1:-1]]);continue;}
+    if(st<3)L.push([[0,.5,-1],[.5,1,-1]]);
+    else L.push([0,1,2,3].map(q=>[q/4,(q+1)/4,st>=4?q:-1]));}
+  return L;}
+function renderO2(){
+  const st=O2.st;let s=`<svg viewBox="0 0 575 108" class="svgw" role="img" aria-label="빵 3개를 4명에게 나누는 그림"><defs>`;
+  for(let l=0;l<3;l++)s+=`<clipPath id="lc${l}"><rect x="${20+l*185}" y="12" width="160" height="66" rx="26"/></clipPath>`;
+  s+='</defs>';
+  o2pieces().forEach((ps,l)=>{const x=20+l*185;s+=`<g clip-path="url(#lc${l})">`;
+    ps.forEach(([a,b,o])=>{s+=`<rect x="${x+a*160}" y="12" width="${(b-a)*160}" height="66" fill="${o>=0?KC[o]:'#f1c27d'}" stroke="#fff" stroke-width="3"/>`;});
+    s+=`</g><rect x="${x}" y="12" width="160" height="66" rx="26" fill="none" stroke="#b9853f" stroke-width="2.5"/><text x="${x+80}" y="98" text-anchor="middle" font-size="12" fill="#6b6f80">빵 ${l+1}</text>`;});
+  $('#o2-svg').innerHTML=s+'</svg>';
+  $('#o2-people').innerHTML=[0,1,2,3].map(j=>`<div class="person" style="--c:${KC[j]}"><div>${KN[j]}</div><b>${st>=2?F(1,2):'<span class="sub" style="font-size:14px">아직 없음</span>'}${st>=4?' + '+F(1,4):''}</b></div>`).join('');
+  const bt=$('#o2-step');bt.hidden=st>=4;if(st<4)bt.textContent=O2BTN[st];
+  const m=$('#o2-msg');m.innerHTML=O2MSG[st];m.className='msg'+(st>=4?' good':'');
+  $('#o2-quiz').hidden=st<4;
+}
+$('#o2-step').onclick=()=>{if(O2.st<4){O2.st++;renderO2();}};
+$('#o2-reset').onclick=()=>{O2.st=0;$('#o2-qmsg').innerHTML='';$('#o2-qmsg').className='msg';$$('#o2-opts .choice').forEach(x=>x.classList.remove('right','wrong'));renderO2();};
+const O2Q=[[F(1,3),'🤔 빵 3개 중 1개라는 뜻일까요? 한 사람이 받은 건 반쪽과 그 반쪽의 반이에요. 빵 1개를 4조각으로 보면 몇 조각일까요?'],[F(3,4),''],[F(4,3),'🤔 4/3은 빵 1개보다 많아요. 한 사람이 빵 1개보다 많이 받았나요?']];
+$('#o2-opts').innerHTML=O2Q.map(([t],i)=>`<button class="choice" data-o2q="${i}" style="font-size:20px">${t}</button>`).join('');
+$('#o2-opts').addEventListener('click',e=>{
+  const b=e.target.closest('[data-o2q]');if(!b)return;const i=+b.dataset.o2q,m=$('#o2-qmsg');
+  $$('#o2-opts .choice').forEach(x=>x.classList.remove('right','wrong'));
+  if(i===1){b.classList.add('right');m.innerHTML='🎉 정답! 한 사람 몫은 빵 1개의 3/4이에요. 그리고 이건 <b>3 ÷ 4</b>의 답이기도 해요.';m.className='msg good';$('#o2-res').hidden=false;ocDone(2);mark('oe');}
+  else{b.classList.add('wrong');m.innerHTML=O2Q[i][1];m.className='msg';m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');}
+});
+
+/* chapter 4 */
+const O3={n:5,k:2,d:null,u:null};
+const FOOD=['떡','빵','초콜릿','김밥'];
+function newO3(){let n,k;do{n=3+Math.floor(Math.random()*6);k=1+Math.floor(Math.random()*(n-1));}while(n===O3.n&&k===O3.k);O3.n=n;O3.k=k;O3.d=O3.u=null;O3.f=FOOD[Math.floor(Math.random()*FOOD.length)];$('#o3-msg').innerHTML='';$('#o3-msg').className='msg';renderO3();}
+function o3cands(){const{n,k}=O3;let a=n-k;if(a===k||a===n)a=n+1;return [k,n,a].sort((x,y)=>x-y);}
+function renderO3(){
+  const{n,k,d,u}=O3,f=O3.f||'떡';
+  $('#o3-q').innerHTML=`${f} 하나를 <b>똑같이 ${n}조각</b>으로 나누고, 그중 <b>${k}조각</b>을 먹었어요. (초록색이 먹은 조각)`;
+  const bar=$('#o3-bar');bar.style.setProperty('--n',n);bar.innerHTML=Array.from({length:n},(_,i)=>`<span class="${i<k?'on':''}"></span>`).join('');
+  const c=o3cands();
+  $('#o3-d').innerHTML=c.map(v=>`<button class="chip${v===d?' on':''}" data-o3d="${v}">${v}</button>`).join('');
+  $('#o3-u').innerHTML=c.map(v=>`<button class="chip${v===u?' on':''}" data-o3u="${v}">${v}</button>`).join('');
+}
+$('#o3-box').addEventListener('click',e=>{
+  const a=e.target.closest('[data-o3d]'),b=e.target.closest('[data-o3u]');
+  if(a){O3.d=+a.dataset.o3d;renderO3();}else if(b){O3.u=+b.dataset.o3u;renderO3();}
+});
+$('#o3-check').onclick=()=>{
+  const{n,k,d,u}=O3,m=$('#o3-msg');
+  if(d===null||u===null){m.innerHTML='👩 분모와 👧 분자를 하나씩 골라 주세요.';m.className='msg';return;}
+  if(d===n&&u===k){
+    m.innerHTML=`🎉 정답! 엄마 수(분모)는 ${n}, 아이 수(분자)는 ${k} → ${F(k,n)}`;m.className='msg good';
+    $('#o3-lfrac').innerHTML=`<div class="bigfrac">${F(k,n)}</div><div class="ltags"><div class="ltag" style="background:#fff1e8">← 👧 분자(分子) · 아이 수<small>그중 먹은(고른) 조각 수</small></div><div class="ltag" style="background:#e3ecfb">← 👩 분모(分母) · 엄마 수<small>전체를 똑같이 나눈 조각 수</small></div></div>`;
+    $('#o3-res').hidden=false;ocDone(3);mark('on');
+  }else{
+    m.innerHTML=(d===k&&u===n)?'🔄 거꾸로예요! 아래에 쓰는 <b>엄마 수</b>는 "전체를 몇 조각으로 나눴나"예요.':d!==n?'🤔 분모(엄마 수)는 <b>전체를 몇 조각으로 나눴는지</b>예요. 칸을 모두 세어 보세요.':'🤔 분자(아이 수)는 <b>그중 먹은 조각 수</b>예요. 초록색 칸을 세어 보세요.';
+    m.className='msg';m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');
+  }
+};
+$('#o3-new').onclick=newO3;
+
+/* chapter 5 */
+const GLYPH4='<svg viewBox="0 0 80 70" width="54" aria-hidden="true"><ellipse cx="40" cy="13" rx="30" ry="9" fill="#2b2d42"/><rect x="19" y="30" width="5" height="34" rx="2" fill="#2b2d42"/><rect x="32" y="30" width="5" height="34" rx="2" fill="#2b2d42"/><rect x="45" y="30" width="5" height="34" rx="2" fill="#2b2d42"/><rect x="58" y="30" width="5" height="34" rx="2" fill="#2b2d42"/></svg>';
+const NOT=[
+ {t:'고대 이집트',w:'약 3,600년 전',show:`${F(1,2)}<span>+</span><span class="glyph">${GLYPH4}1/4</span>`,d:'"1조각짜리" 분수를 더해서 나타냈어요. 3/4은 <b>1/2 + 1/4</b>처럼 썼어요. 1/4은 입 모양 기호 아래 막대 4개를 그렸어요.'},
+ {t:'옛 인도',w:'1,000여 년 전',show:'<span class="stack"><span>3</span><span>4</span></span>',d:'나눈 조각 수를 아래에, 그중 몇 개인지를 위에 <b>겹쳐서</b> 썼어요. 하지만 아직 <b>가로선은 없었어요.</b>'},
+ {t:'아랍 수학자',w:'12세기 무렵',show:F(3,4),d:'위와 아래 숫자 사이에 <b>가로선</b>을 그었어요. 오늘날 분수 모양이 이때 만들어졌어요.'},
+ {t:'유럽 · 피보나치',w:'1202년',show:`${F(3,4)}<span style="font-size:16px;color:#6b6f80">『산반서』</span>`,d:'이탈리아의 수학자 피보나치가 『산반서』라는 책에서 이 쓰는 법을 소개하면서 유럽에 널리 퍼졌어요.'},
+ {t:'오늘날 우리',w:'지금',show:`${F(3,4)}<span>=</span><span>3 ÷ 4</span>`,d:'가로선은 <b>나누기</b>를 뜻해요. 그래서 3/4은 3 ÷ 4와 같아요.'}
+];
+const O4={cur:-1,seen:new Set()};
+function renderO4(){
+  $('#o4-cards').innerHTML=NOT.map((x,i)=>`<button class="ncard${i===O4.cur?' on':''}${O4.seen.has(i)?' seen':''}" data-o4="${i}">${O4.seen.has(i)?'✅ ':''}${x.t}<small>${x.w}</small></button>`).join('');
+  const s=$('#o4-show');
+  if(O4.cur<0){s.innerHTML='<div class="sub" style="padding:30px 0">👆 위 카드를 하나씩 눌러 보세요. (모두 5개)</div>';return;}
+  const x=NOT[O4.cur];s.innerHTML=`<div class="sub" style="font-weight:800">${x.t} · ${x.w}에는 3/4을 이렇게 썼어요</div><div class="nbig">${x.show}</div><p style="margin:0">${x.d}</p>`;
+}
+$('#o4-cards').addEventListener('click',e=>{const b=e.target.closest('[data-o4]');if(!b)return;O4.cur=+b.dataset.o4;O4.seen.add(O4.cur);renderO4();
+  if(O4.seen.size===NOT.length&&$('#o4-res').hidden){$('#o4-res').hidden=false;ocDone(4);}});
+
+/* chapter 6 */
+$('#oy-check').onclick=()=>{
+  const t=$('#oy-text').value,o=$('#oy-out');
+  if(t.trim().length<8){o.innerHTML='<div class="msg">조금 더 길게 써 볼까요? "옛날 사람들이 ~을 나누려고 했는데…"로 시작해 보세요.</div>';return;}
+  const c=[[/나누|나눠|나눌|나눈|쪼개|자르|잘라|자른|재야|재다|재는|재기|재서|측정/,'무언가를 나누거나 재야 했다는 점'],[/남|1보다 ?작|1개보다 ?적|하나보다 ?적|모자|부족|사이|조각/,'1, 2, 3으로는 말할 수 없는 양이 생겼다는 점'],[/똑같|같은 ?크기|공평|같게|고르게/,'똑같은 크기로 나눈다는 점']];
+  const r=c.map(([re,l])=>[re.test(t),l]),all=r.every(x=>x[0]);
+  o.innerHTML=`<ul class="checks">${r.map(([ok,l])=>`<li class="${ok?'ok':''}">${ok?'✅':'⬜'} ${l}</li>`).join('')}</ul><div class="msg${all?' good':''}">${all?'🎉 훌륭해요! 분수가 <b>왜</b> 필요했는지 제대로 이해했어요.':'좋아요! ⬜ 표시된 부분을 넣어서 한 번 더 써 볼까요?'}</div>`;
+  if(all){ocDone(5);mark('oy');}
+};
+
+/* ---------- history ---------- */
+const OWN={고조선:'#c9a27a',고구려:'#ef8a87',백제:'#7fa9ee',신라:'#f4c45a',가야:'#9fd08f',발해:'#b297dd',당:'#c4c4c4',작은나라:'#eadfcd'};
+const LABEL={당:'당(고구려 옛 땅)',작은나라:'작은 나라들'};
+const REG={N:'M30,62 L42,18 L150,8 L178,40 L152,80 L140,100 L50,106 L60,90 Z',H:'M50,106 L140,100 L136,112 L148,140 L56,146 L44,122 Z',SW:'M56,146 L100,143 L96,236 L82,278 L70,281 L50,252 L56,212 L40,182 L60,152 Z',SE:'M100,143 L148,140 L152,152 L162,202 L152,258 L126,278 L126,240 L96,236 Z',G:'M96,236 L126,240 L126,278 L110,286 L82,278 Z'};
+const LPOS={N:[100,52],SE:[132,196],SW:[74,196],G:[107,262],H:[96,139]};
+const SCENES=[
+{era:'고조선',emoji:'🏔️',years:'기원전 2333년(전해지는 이야기) ~ 기원전 108년',title:'우리 역사의 첫 나라, 고조선',
+ map:{N:'고조선',H:'작은나라',SW:'작은나라',SE:'작은나라',G:'작은나라'},han:null,
+ cause:'농사를 짓게 되면서 사람들이 한곳에 모여 살게 되었고, 청동기를 가진 힘센 지도자가 나타났어요.',
+ event:'단군왕검이 고조선을 세웠다고 전해져요. 고조선은 8조법이라는 법을 만들어 사회 질서를 지켰어요.',
+ result:'기원전 108년, 중국 한나라의 공격을 받아 고조선이 무너졌어요.',
+ next:'고조선이 있던 곳과 그 주변에 부여, 고구려, 옥저, 동예, 삼한 같은 여러 나라가 생겨났어요.',
+ world:'기원전 221년, 중국에서는 진나라의 진시황이 처음으로 중국을 하나로 통일했어요.'},
+{era:'삼국과 가야',emoji:'🌱',years:'기원전 57년 ~ 서기 42년 무렵 (전해지는 연도)',title:'네 나라가 자리를 잡다',
+ map:{N:'고구려',H:'백제',SW:'작은나라',SE:'신라',G:'가야'},han:'백제',
+ cause:'철로 만든 농기구와 무기가 퍼지면서 농사가 잘되고, 힘이 센 나라가 이웃 작은 나라들을 합쳐 나갔어요.',
+ event:'신라(기원전 57년), 고구려(기원전 37년), 백제(기원전 18년)가 세워지고, 남쪽 낙동강 근처에는 가야 연맹이 생겼다고 전해져요.',
+ result:'고구려·백제·신라 세 나라와 가야가 서로 경쟁하는 시대가 열렸어요.',
+ next:'이제 큰 질문 하나! "한반도 한가운데 있는 한강을 누가 차지할까?" 한강을 차지한 나라가 차례로 전성기를 맞아요.',
+ world:'기원전 27년, 서쪽에서는 로마가 황제가 다스리는 로마 제국이 되었어요.'},
+{era:'4세기 · 백제',emoji:'⛵',years:'4세기 · 근초고왕 (346~375년)',title:'백제가 먼저 힘을 떨치다',
+ map:{N:'고구려',H:'백제',SW:'백제',SE:'신라',G:'가야'},han:'백제',
+ cause:'백제는 한강 근처의 기름진 땅에서 농사를 짓고, 바닷길로 중국·왜(일본)와 활발히 교류하며 힘을 키웠어요.',
+ event:'근초고왕은 남쪽의 마한 지역을 차지하고, 371년에는 고구려의 평양성을 공격했어요. 이 싸움에서 고구려의 고국원왕이 전사했어요.',
+ result:'백제가 삼국 가운데 가장 먼저 전성기를 맞았어요.',
+ next:'크게 진 고구려는 소수림왕 때 불교를 받아들이고, 율령(나라의 법)과 태학(학교)을 만들어 나라를 튼튼하게 다시 세웠어요.',
+ world:'313년, 로마 제국이 크리스트교를 공식적으로 인정했어요.'},
+{era:'5세기 · 고구려',emoji:'🐎',years:'5세기 · 광개토대왕 (391~412년), 장수왕 (413~491년)',title:'고구려가 한강을 차지하다',
+ map:{N:'고구려',H:'고구려',SW:'백제',SE:'신라',G:'가야'},han:'고구려',
+ cause:'소수림왕 때 다져 놓은 튼튼한 나라 제도 위에서, 고구려는 강한 군대를 키웠어요.',
+ event:'광개토대왕은 영토를 크게 넓히고 신라를 도와 왜를 물리쳤어요. 장수왕은 427년 수도를 평양으로 옮기고, 475년 백제의 수도 한성을 함락해 한강을 차지했어요.',
+ result:'수도를 잃은 백제는 웅진(지금의 공주)으로 도읍을 옮겼어요. 고구려는 최고 전성기를 맞았어요.',
+ next:'이미 433년부터 손을 잡고 있던 백제와 신라(나제동맹)는 힘을 합쳐 한강을 되찾을 기회를 노렸어요.',
+ world:'476년, 서로마 제국이 무너졌어요.'},
+{era:'6세기 · 신라',emoji:'🏹',years:'6세기 · 진흥왕 (540~576년)',title:'신라가 한강의 주인이 되다',
+ map:{N:'고구려',H:'신라',SW:'백제',SE:'신라',G:'신라'},han:'신라',
+ cause:'신라는 법흥왕 때 율령을 만들고(520년) 불교를 공인해(527년) 나라를 정비했어요. 551년에는 백제와 함께 고구려에게서 한강 유역을 되찾았어요.',
+ event:'진흥왕은 553년 백제가 되찾은 한강 아래쪽까지 빼앗아 한강 전체를 차지했어요. 화가 난 백제 성왕이 공격했지만 554년 관산성 전투에서 전사했어요. 신라는 562년 대가야도 정복했어요.',
+ result:'한강을 차지한 신라는 서해 바닷길로 중국과 직접 교류할 수 있게 되었어요. 백제와 신라의 동맹은 깨졌어요.',
+ next:'중국과 바로 이어진 이 바닷길이, 훗날 신라가 당나라와 손잡는 길이 돼요.',
+ world:'589년, 수나라가 오랫동안 나뉘어 있던 중국을 다시 통일했어요.'},
+{era:'고구려 vs 수·당',emoji:'🛡️',years:'612년 · 645년',title:'고구려, 중국의 큰 나라를 막아 내다',
+ map:{N:'고구려',H:'신라',SW:'백제',SE:'신라',G:'신라'},han:'신라',
+ cause:'중국을 통일한 수나라와 그 뒤를 이은 당나라는 동북쪽의 강한 나라 고구려를 굴복시키려 했어요.',
+ event:'612년 을지문덕이 살수(청천강)에서 수나라 대군을 크게 물리쳤어요(살수대첩). 645년에는 안시성 사람들이 당나라 군대를 막아 냈어요.',
+ result:'고구려는 나라를 지켜 냈지만 오랜 전쟁으로 힘이 많이 약해졌어요. 수나라는 무리한 전쟁 등으로 곧 무너졌어요(618년).',
+ next:'고구려를 혼자 이기기 어렵다고 느낀 당나라는, 백제의 공격에 시달리던 신라와 손잡을 생각을 하게 돼요.',
+ world:'618년 중국에 당나라가 세워졌고, 서아시아에서는 이슬람교가 생겨나 빠르게 퍼지기 시작했어요.'},
+{era:'삼국 통일',emoji:'🤝',years:'648년 ~ 676년',title:'신라, 삼국을 통일하다',
+ map:{N:'당',H:'신라',SW:'신라',SE:'신라',G:'신라'},han:'신라',
+ cause:'642년 백제에게 대야성을 빼앗기는 등 위기에 빠진 신라는, 고구려를 이기고 싶던 당나라와 648년 동맹을 맺었어요(나당동맹).',
+ event:'나당 연합군은 660년 백제를(황산벌에서 계백이 김유신에게 패함), 668년 고구려를 무너뜨렸어요. 그런데 당나라가 한반도 전체를 차지하려 하자, 신라는 당과 싸워 675년 매소성, 676년 기벌포에서 이겼어요.',
+ result:'676년, 신라가 당나라를 몰아내고 대동강 남쪽 땅을 하나로 통일했어요.',
+ next:'하지만 고구려의 북쪽 옛 땅은 통일에서 빠져 있었어요. 그곳의 고구려 사람들이 새 나라를 꿈꿔요.',
+ world:'645년, 일본은 다이카 개신을 시작해 나라 제도를 새롭게 고쳐 나갔어요.'},
+{era:'남북국 시대',emoji:'🏯',years:'698년 ~ 935년',title:'남쪽엔 신라, 북쪽엔 발해',
+ map:{N:'발해',H:'신라',SW:'신라',SE:'신라',G:'신라'},han:'신라',
+ cause:'고구려가 무너진 뒤에도 고구려 사람들은 옛 땅에 남아 다시 나라를 세우려는 마음을 품고 있었어요.',
+ event:'698년, 고구려 장수 출신 대조영이 고구려 사람과 말갈 사람을 이끌고 발해를 세웠어요. 남쪽 통일신라에서는 불국사와 석굴암 같은 빛나는 불교 문화가 꽃피었어요.',
+ result:'남쪽의 통일신라와 북쪽의 발해가 함께 있던 이 시기를 "남북국 시대"라고 불러요. 발해는 "바다 동쪽의 번성한 나라(해동성국)"라고 불릴 만큼 발전했어요.',
+ next:'신라 말 혼란 속에 후삼국이 생겨났고, 918년 왕건이 고려를 세웠어요. 발해는 926년 거란에 멸망했고, 신라는 935년 고려에 항복했어요. → 다음은 고려 시대!',
+ world:'당나라 수도 장안은 세계 여러 나라 사람들이 모여드는 국제 도시였어요.'}
+];
+let SC=0;const REV=SCENES.map(()=>1),VIS=new Set();
+function mapSVG(sc){
+  let s=`<svg viewBox="0 0 200 300" class="map" role="img" aria-label="${sc.era} 세력 지도 (간단한 그림)"><rect width="200" height="300" rx="14" fill="#e8f4fb"/>`;
+  s+=`<text x="14" y="222" font-size="10" fill="#6f9fc2">서해</text><text x="168" y="132" font-size="10" fill="#6f9fc2">동해</text>`;
+  for(const k of ['N','H','SW','SE','G'])s+=`<path d="${REG[k]}" fill="${OWN[sc.map[k]]}" stroke="#fff" stroke-width="2"/>`;
+  if(sc.han)s+=`<path d="${REG.H}" fill="none" stroke="#2b2d42" stroke-width="2.2" stroke-dasharray="5 3"/>`;
+  s+=`<path d="M46,124 C70,114 82,132 100,121 S128,112 142,118" fill="none" stroke="#2f80ed" stroke-width="3.5" stroke-linecap="round"/><text x="112" y="113" font-size="9" fill="#1f5fbf" font-weight="800">한강</text>`;
+  const seen=new Set();
+  for(const k of ['N','SE','SW','G','H']){const o=sc.map[k];if(seen.has(o))continue;seen.add(o);const[x,y]=LPOS[k];
+    s+=`<text x="${x}" y="${y}" text-anchor="middle" font-size="${k==='G'||k==='H'?9.5:11}" font-weight="800" fill="#2b2d42">${LABEL[o]||o}</text>`;}
+  return s+'</svg>';
+}
+const STEPS=[['왜?','원인','#ffe3d3'],['무슨 일이?','사건','#fff1c9'],['그래서?','결과','#dff3e9'],['다음 장면으로','이어지는 영향','#e3ecfb']];
+const GUESS=['','무슨 일이 일어났을지 먼저 예상해 보세요!','그 결과 어떻게 됐을지 예상해 보세요!','이 일이 다음 시대에 어떤 영향을 줬을까요?'];
+function setScene(i){SC=Math.max(0,Math.min(SCENES.length-1,i));VIS.add(SC);renderScene();if(VIS.size===SCENES.length)mark('hall');}
+function renderScene(){
+  const s=SCENES[SC],r=REV[SC],txt=[s.cause,s.event,s.result,s.next];
+  $('#era-bar').innerHTML=SCENES.map((x,i)=>`<button class="era${i===SC?' on':''}${VIS.has(i)?' seen':''}" data-sc="${i}" aria-label="${x.era}"><span>${x.emoji}</span><small>${x.era}</small></button>`).join('');
+  centerOn($('#era-bar'));
+  $('#sc-head').innerHTML=`<span class="yrs">${s.years}</span><h2>${s.emoji} ${s.title}</h2>`;
+  let h='';
+  for(let i=0;i<r;i++){h+=`<div class="step" style="--sb:${STEPS[i][2]}"><div class="sl"><b>${STEPS[i][0]}</b><small>${STEPS[i][1]}</small></div><p>${txt[i]}</p></div>`;if(i<3)h+='<div class="arr">↓</div>';}
+  if(r<4)h+=`<div class="guess"><span>🤔 ${GUESS[r]}</span><button class="btn" id="reveal">다음 고리 열기 →</button></div>`;
+  $('#sc-chain').innerHTML=h;
+  $('#sc-map').innerHTML=mapSVG(s);
+  $('#sc-legend').innerHTML=s.han?`한강의 주인: <span style="background:${OWN[s.han]};padding:2px 10px;border-radius:999px">${s.han}</span>`:'한강 주변: 여러 작은 나라들';
+  $('#sc-world').innerHTML=`🌍 <b>같은 시기 세계에서는?</b><br>${s.world}`;
+  $('#sc-prev').disabled=SC===0;$('#sc-prev').style.visibility=SC===0?'hidden':'visible';
+  $('#sc-next').textContent=SC<SCENES.length-1?`다음 장면: ${SCENES[SC+1].era} →`:'처음 장면으로 ↺';
+  $('#sc-all').hidden=r>=4;
+}
+$('#era-bar').addEventListener('click',e=>{const b=e.target.closest('[data-sc]');if(b)setScene(+b.dataset.sc);});
+$('#sc-chain').addEventListener('click',e=>{if(e.target.id==='reveal'){REV[SC]=Math.min(4,REV[SC]+1);renderScene();}});
+$('#sc-all').onclick=()=>{REV[SC]=4;renderScene();};
+$('#sc-prev').onclick=()=>setScene(SC-1);
+$('#sc-next').onclick=()=>setScene(SC<SCENES.length-1?SC+1:0);
+$('#cq-btn').onclick=()=>{$('#cq-ans').hidden=false;$('#cq-btn').hidden=true;};
+
+/* sort quiz */
+const EV=[[371,'근초고왕이 고구려 평양성을 공격했어요'],[475,'장수왕이 백제 한성을 함락하고 한강을 차지했어요'],[553,'진흥왕이 한강 유역 전체를 차지했어요'],[612,'을지문덕이 살수대첩에서 수나라를 물리쳤어요'],[660,'백제가 나당 연합군에게 멸망했어요'],[698,'대조영이 발해를 세웠어요']];
+const SQ={order:[],picked:[]};
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function newSort(){do{SQ.order=shuffle(EV.map((_,i)=>i));}while(SQ.order.every((v,i)=>v===i));SQ.picked=[];renderSort('');}
+function renderSort(msg,good){
+  $('#sq-items').innerHTML=SQ.order.map(i=>{const p=SQ.picked.indexOf(i);return `<button class="sq${p>=0?' done':''}" data-ev="${i}" ${p>=0?'disabled':''}>${p>=0?`<span class="no">${p+1}</span>`:''}<span>${EV[i][1]}${p>=0?` <small>(${EV[i][0]}년)</small>`:''}</span></button>`;}).join('');
+  const m=$('#sq-msg');m.innerHTML=msg;m.className='msg'+(good?' good':'');
+}
+$('#sq-items').addEventListener('click',e=>{
+  const b=e.target.closest('[data-ev]');if(!b||b.disabled)return;const i=+b.dataset.ev;
+  if(i===SQ.picked.length){SQ.picked.push(i);
+    if(SQ.picked.length===EV.length){renderSort('🎉 모두 맞혔어요! 한강의 주인이 <b>백제 → 고구려 → 신라</b>로 바뀐 흐름을 알면 순서가 저절로 보여요.',true);mark('hsort');}
+    else renderSort('👍 맞아요! 그다음에 일어난 일은?');}
+  else{renderSort(`🤔 "${EV[i][1]}"보다 먼저 일어난 일이 있어요. 한강의 주인이 바뀐 순서(백제 → 고구려 → 신라)를 떠올려 보세요!`);const m=$('#sq-msg');m.classList.add('shake');}
+});
+$('#sq-reset').onclick=newSort;
+
+/* why quiz */
+const WQ=[['한강 주변에 넓고 기름진 땅이 있어서 농사가 잘되었어요',true],['한강과 서해 바닷길로 중국과 교류하기 좋았어요',true],['한강 땅속에 금이 가장 많이 묻혀 있었어요',false],['사람이 많이 살아서 군사와 세금을 모으기 좋았어요',true]];
+$('#wq-opts').innerHTML=WQ.map(([t],i)=>`<label class="opt" id="wo${i}"><input type="checkbox" data-w="${i}"><span>${t}</span></label>`).join('');
+$('#wq-check').onclick=()=>{
+  let ok=true;const m=$('#wq-msg');
+  WQ.forEach(([,a],i)=>{const c=$(`[data-w="${i}"]`).checked,el=$('#wo'+i);el.classList.remove('right','wrong');if(c!==a){ok=false;if(c)el.classList.add('wrong');}else if(c)el.classList.add('right');});
+  if(ok){m.innerHTML='🎉 정답! 한강은 <b>먹을 것(농사)</b>, <b>사람(군사·세금)</b>, <b>길(중국과의 교류)</b>을 모두 주는 곳이었어요. 그래서 한강을 차지한 나라가 전성기를 맞았어요.';m.className='msg good';mark('hwhy');}
+  else{m.innerHTML='🤔 아직 아니에요. 빨간 칸은 다시 생각해 보고, 빠진 까닭이 없는지도 살펴보세요. (힌트: 알맞은 것은 3개!)';m.className='msg';}
+};
+
+/* init */
+renderFA();renderFB();renderFC();renderO1();renderO2();O3.f='떡';renderO3();renderO4();renderOC();newSort();updateStars();SC=0;VIS.add(0);renderScene();
+</script>
+</body>
+</html>
