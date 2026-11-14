@@ -241,6 +241,66 @@ textarea{width:100%;min-height:96px;border:2px solid var(--line);border-radius:1
 textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px var(--pri-soft)}
 .checks{list-style:none;padding:0;margin:12px 0 0}.checks li{padding:3px 0;color:var(--mute)}.checks li.ok{color:var(--ink);font-weight:700}
 
+
+/* ---------- practice ---------- */
+.pcta{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;width:100%;background:linear-gradient(120deg,#fff4ec,#fff 60%);border:2px solid #ffd9c6;border-radius:var(--r);padding:16px 18px;margin-bottom:18px;box-shadow:var(--shadow);transition:transform .15s}
+.pcta:hover{transform:translateY(-2px)}
+.pcta:focus-visible{outline:3px solid var(--pri);outline-offset:3px}
+.pcta .pi{flex:none;width:52px;height:52px;border-radius:16px;background:var(--pri);display:grid;place-items:center;font-size:28px}
+.pcta b{display:block;font-size:18px;letter-spacing:-.02em}
+.pcta small{display:block;font-size:14px;color:var(--sub);line-height:1.5}
+.pcta .go{margin-left:auto;flex:none;font-weight:900;color:var(--pri-ink);font-size:20px}
+.ptypes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.pchip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.pchip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.pchip .ck{color:var(--ok);font-weight:900}
+.pchip.on .ck{color:#7ee2b3}
+.pscore{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.pscore span{background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700;box-shadow:var(--shadow)}
+.pscore small{color:var(--mute);font-weight:600}
+.pq{font-size:19px;font-weight:800;line-height:1.6;margin:16px 0 10px}
+.pq .frac{font-size:1.12em;color:var(--pri-ink)}
+.pfig{background:var(--panel);border-radius:16px;padding:16px;margin:8px 0 4px}
+.pnow{text-align:center;font-weight:800;margin-top:10px}
+.pnow .frac{color:var(--pri-ink)}
+.tb{display:grid;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:#fff;height:52px;max-width:520px;margin:6px auto}
+.tb>*{border:0;border-right:2px solid var(--ink);background:#fff;padding:0;min-width:0;border-radius:0;transition:background .15s}
+.tb>*:last-child{border-right:0}
+.tb.click>*{cursor:pointer}
+.tb .on{background:#ffa94d}.tb .base{background:#7fb2f0}.tb .ok{background:#9fd08f}
+.tb .cut{background:repeating-linear-gradient(135deg,#7fb2f0 0 5px,#fff 5px 11px)}
+.opts.h{flex-direction:row;flex-wrap:wrap}
+.opts.h .choice{flex:1 1 150px;text-align:center;font-size:17px}
+.choice .frac{font-size:1.25em}
+.choice:disabled{cursor:default}
+.choice.on{border-color:var(--pri);background:var(--pri-soft)}
+#pp-msg,#pp-hintbox{scroll-margin-bottom:96px;scroll-margin-top:80px}
+#pp-hintbox{background:#eef2ff;box-shadow:inset 4px 0 0 #8ea2ff}
+.cmpq{display:flex;align-items:center;justify-content:center;gap:26px;font-size:54px;color:var(--pri-ink);margin:4px 0 8px}
+.cmpq .vsq{font-size:26px;color:var(--ink);font-weight:900;width:54px;height:54px;border-radius:50%;background:#fff;display:grid;place-items:center;border:2px dashed var(--line2)}
+.cmpq .vsq.done{border:2px solid var(--ok);color:var(--ok-d);background:var(--ok-soft)}
+.candy,.grp{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.candy{max-width:440px;margin:0 auto}
+.groups{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.grp{border:2px dashed #e0b48f;border-radius:14px;padding:8px;background:#fff;max-width:118px}
+.it{width:46px;height:46px;border-radius:12px;border:2px solid var(--line);background:#fff;font-size:24px;display:grid;place-items:center;padding:0;transition:transform .1s,background .15s}
+.it.on{background:#ffe1c7;border-color:var(--pri);transform:translateY(-3px)}
+.it:disabled{cursor:default}
+.wtrack{position:relative;height:56px;width:100%;max-width:560px;margin:6px auto 0}
+.wtrack .pc{position:absolute;top:6px;height:44px;background:#ffa94d;border:2px solid var(--ink);border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:12px;box-sizing:border-box}
+.wtrack .pc.s{background:#7fb2f0}
+.wtrack .pc.new{animation:pop .25s}
+.wone{position:absolute;top:0;bottom:0;left:0;border:3px dashed var(--ok);border-radius:10px;pointer-events:none;z-index:2}
+.wone b{position:absolute;right:-2px;top:-24px;background:var(--ok);color:#fff;font-size:12px;border-radius:999px;padding:0 8px;line-height:20px}
+.pizrow{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.pizrow .pizza{width:170px;margin:0}
+.pfig .pizza{max-width:260px}
+.pline{width:100%;max-width:560px;display:block;margin:0 auto}
+.pline rect{cursor:pointer;outline:none}
+.pline rect:focus{fill:rgba(240,88,42,.12)}
+.mixed{display:inline-flex;align-items:center;gap:1px;font-weight:800}
+.mixed .frac{font-size:.8em}
+
 /* ---------- history ---------- */
 .hgrid{display:grid;grid-template-columns:1.45fr 1fr;gap:18px;margin-top:14px}
 .step{background:var(--sb);border-radius:14px;padding:14px 16px;display:flex;gap:14px;animation:pop .35s}
@@ -346,9 +406,24 @@ button,.opt,.choice,.chip,.tab,.node,.era,.stn,.scard{touch-action:manipulation;
   .hgrid{gap:14px}
   #toast{bottom:calc(88px + env(safe-area-inset-bottom))}
 }
+@media(max-width:640px){
+  .pcta{padding:14px;margin-bottom:14px}.pcta .pi{width:46px;height:46px;font-size:24px}.pcta b{font-size:17px}
+  .ptypes{flex-wrap:nowrap;overflow-x:auto;margin:0 -14px 12px;padding:2px 14px 4px;scrollbar-width:none}
+  .ptypes::-webkit-scrollbar{display:none}
+  .pchip{min-height:44px}
+  .pq{font-size:17px}
+  .pfig{padding:12px 10px}
+  .opts.h .choice{flex:1 1 calc(50% - 5px);min-height:64px}
+  .opts.h.txt .choice{flex-basis:100%;min-height:50px}
+  .pscore span{padding:5px 12px;font-size:13px}
+  .cmpq{font-size:44px;gap:16px}
+  .it{width:42px;height:42px;font-size:22px}
+  .grp{max-width:108px;padding:6px}
+  .pizrow{gap:8px}.pizrow .pizza{width:132px}
+  .tb{height:48px}
+}
 @media(max-width:360px){.navbtn{font-size:12px}.logo{font-size:18px}.ncards{grid-template-columns:1fr 1fr}.era{flex-basis:84px}}
 </style>
-
 </head>
 <body>
 <header>
@@ -426,6 +501,8 @@ button,.opt,.choice,.chip,.tab,.node,.era,.stn,.scard{touch-action:manipulation;
     </button>
   </div>
 
+  <button class="pcta" data-go="frac" data-tab="p"><span class="pi" aria-hidden="true">🧩</span><span><b>분수 직접 풀어 보기</b><small>색칠하기·수직선·크기 비교 등 9가지 체험 문제. 풀 때마다 새 문제가 나와요.</small></span><span class="go" aria-hidden="true">→</span></button>
+
   <div class="card">
     <div class="card-h"><div><h3>개념 연결 지도</h3><p>지금 배우는 개념이 어디서 와서 어디로 가는지 한 줄로 보여요. 정류장을 눌러 바로 가 보세요.</p></div></div>
     <div class="mlabel" style="--c:var(--pri)"><i></i>수학 노선</div>
@@ -464,6 +541,7 @@ button,.opt,.choice,.chip,.tab,.node,.era,.stn,.scard{touch-action:manipulation;
     <button class="tab" data-ftab="a"><b>1</b>피자 나누기</button>
     <button class="tab" data-ftab="b"><b>2</b>크기가 같은 분수</button>
     <button class="tab" data-ftab="c"><b>3</b>분수 = 나눗셈?</button>
+    <button class="tab" data-ftab="p"><b>4</b>직접 풀어 보기</button>
   </div>
 
   <!-- Tab O : origin story -->
@@ -682,6 +760,21 @@ button,.opt,.choice,.chip,.tab,.node,.era,.stn,.scard{touch-action:manipulation;
       <div style="text-align:center" class="sub" id="fc-note"></div>
       <div class="msg">💡 <b>연결 고리:</b> 분수의 가로 막대(─)는 사실 <b>나누기(÷)</b>와 같은 뜻이에요. 3 ÷ 4 = 3/4. 그래서 6학년에서 배우는 <b>비율</b>도 분수로 나타낼 수 있어요.</div>
       <div class="connect" style="margin-top:12px"><span class="node">나눗셈</span><span class="cmarr">→</span><span class="node" style="border-color:var(--pri)">분수</span><span class="cmarr">→</span><span class="node">비와 비율</span><span class="cmarr">→</span><span class="node">정비례 · 함수</span></div>
+      <div style="margin-top:14px"><button class="btn" data-go="frac" data-tab="p">🧩 이제 직접 풀어 보기 →</button></div>
+    </div>
+  </div>
+
+  <!-- Tab P : practice -->
+  <div id="tab-p" class="fpanel" hidden>
+    <div class="ointro"><span aria-hidden="true">🧩</span><span>직접 칠하고, 고르고, 붙여 보면서 푸는 분수 문제예요. <b>문제는 풀 때마다 새로 만들어져요.</b> 틀려도 괜찮아요. 왜 틀렸는지 알려 줄게요.</span></div>
+    <div class="ptypes" id="pp-types"></div>
+    <div class="pscore" id="pp-score"></div>
+    <div class="card">
+      <div id="pp-head"></div>
+      <div id="pp-body"></div>
+      <div class="msg" id="pp-hintbox"></div>
+      <div class="msg" id="pp-msg" aria-live="polite"></div>
+      <div class="row" style="margin-top:14px"><button class="btn" id="pp-check">확인하기</button><button class="btn ghost" id="pp-hint">💡 힌트</button><button class="btn ghost" id="pp-next">다음 문제 →</button></div>
     </div>
   </div>
 
@@ -761,10 +854,10 @@ const gcd=(a,b)=>b?gcd(b,a%b):a;
 const F=(n,d)=>`<span class="frac"><span>${n}</span><span>${d}</span></span>`;
 
 /* ---------- stars ---------- */
-const STARS={om:'남은 길이를 분수로 재기',oe:'이집트 방식으로 빵 나누기',on:'분모·분자 이름 맞히기',oy:'분수가 생긴 까닭 설명하기',fa:'n/n = 1 발견하기',fb:'크기가 같은 분수 찾기',fc:'분수 = 나눗셈 실험하기',ex:'내 말로 설명하기',hall:'역사 장면 8개 모두 보기',hsort:'사건 순서 맞히기',hwhy:'한강 질문 풀기'};
+const STARS={om:'남은 길이를 분수로 재기',oe:'이집트 방식으로 빵 나누기',on:'분모·분자 이름 맞히기',oy:'분수가 생긴 까닭 설명하기',fa:'n/n = 1 발견하기',fb:'크기가 같은 분수 찾기',fc:'분수 = 나눗셈 실험하기',ex:'내 말로 설명하기',fp:'체험 문제 10개 맞히기',fq:'체험 문제 9종류 모두 풀기',hall:'역사 장면 8개 모두 보기',hsort:'사건 순서 맞히기',hwhy:'한강 질문 풀기'};
 const done=new Set();
 function mark(k){if(done.has(k))return;done.add(k);updateStars();toast(`⭐ 별 획득! ${STARS[k]}`);}
-const SUBJ={math:['om','oe','on','oy','fa','fb','fc','ex'],hist:['hall','hsort','hwhy']};
+const SUBJ={math:['om','oe','on','oy','fa','fb','fc','ex','fp','fq'],hist:['hall','hsort','hwhy']};
 function updateStars(){$('#stars-n').textContent=`${done.size} / ${Object.keys(STARS).length}`;
   for(const[k,a]of Object.entries(SUBJ)){const c=a.filter(x=>done.has(x)).length;$('#pg-'+k).style.width=(c/a.length*100)+'%';$('#pg-'+k+'-t').textContent=`별 ${c} / ${a.length}`;}
   $('#record').innerHTML=Object.entries(STARS).map(([k,v])=>`<li class="${done.has(k)?'ok':''}">${done.has(k)?'⭐':'☆'} ${v}</li>`).join('');}
@@ -779,7 +872,7 @@ function go(view,tab){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go,g.dataset.tab);});
-function setTab(t){setTimeout(()=>centerOn($('.tabs')),0);$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.ftab===t));['o','a','b','c'].forEach(x=>$('#tab-'+x).hidden=x!==t);$('#ex-card').hidden=t==='o';}
+function setTab(t){setTimeout(()=>centerOn($('.tabs')),0);$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.ftab===t));['o','a','b','c','p'].forEach(x=>$('#tab-'+x).hidden=x!==t);$('#ex-card').hidden=t==='o'||t==='p';}
 $$('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.ftab)));
 
 /* ---------- pizza ---------- */
@@ -1201,8 +1294,216 @@ $('#wq-check').onclick=()=>{
   else{m.innerHTML='🤔 아직 아니에요. 빨간 칸은 다시 생각해 보고, 빠진 까닭이 없는지도 살펴보세요. (힌트: 알맞은 것은 3개!)';m.className='msg';}
 };
 
+/* ---------- practice (직접 풀어 보기) ---------- */
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const red=(a,b)=>{const g=gcd(a,b);return[a/g,b/g];};
+const MX=(w,r,d)=>r?`<span class="mixed">${w}${F(r,d)}</span>`:`${w}`;
+function tbar(n,cls,click,lab){return `<div class="tb${click?' click':''}" style="grid-template-columns:repeat(${n},1fr)"${lab?` role="img" aria-label="${lab}"`:''}>${Array.from({length:n},(_,i)=>click?`<button type="button" data-act="cell" data-i="${i}" class="${cls(i)}" aria-pressed="${cls(i)==='on'}" aria-label="${i+1}번째 칸"></button>`:`<span class="${cls(i)}"></span>`).join('')}</div>`;}
+function spread(s){const a=[...s].sort((x,y)=>x-y);return a.length>1&&a[a.length-1]-a[0]+1!==a.length;}
+const PT=[
+ {id:'color',ic:'🎨',name:'색칠하기',lv:'3학년'},
+ {id:'read',ic:'👀',name:'분수 읽기',lv:'3학년'},
+ {id:'line',ic:'📍',name:'수직선에 꽂기',lv:'3~4학년'},
+ {id:'compare',ic:'⚖️',name:'크기 비교',lv:'3~5학년'},
+ {id:'set',ic:'🍬',name:'사탕 묶음',lv:'3학년'},
+ {id:'mixed',ic:'🧮',name:'1보다 큰 분수',lv:'3학년'},
+ {id:'equiv',ic:'🔁',name:'같은 분수 찾기',lv:'5학년'},
+ {id:'whole',ic:'🧱',name:'조각으로 1 만들기',lv:'5학년'},
+ {id:'share',ic:'🍕',name:'나눠 먹기',lv:'6학년 미리 보기'}
+];
+const PQ={
+ color:{
+  gen(){const n=rnd(2,8),m=(n<=6&&Math.random()<.3)?2:1;return{n,m,k:rnd(1,n-1),style:pick(['bar','pizza']),sel:new Set()};},
+  ask:q=>`${F(q.k,q.n)} 만큼 색칠해 보세요.`,
+  how:q=>`${q.style==='bar'?'칸':'조각'}을 누르면 칠해지고, 다시 누르면 지워져요.`,
+  body(q){const N=q.n*q.m;return `<div class="pfig">${q.style==='bar'?tbar(N,i=>q.sel.has(i)?'on':'',true):pizza({n:N,fill:i=>q.sel.has(i)?'#ffa94d':null,click:true,size:260,label:`${N}조각 피자`})}<div class="pnow">지금 칠한 양: ${F(q.sel.size,N)}</div></div>`;},
+  act(q,a,i){if(a==='cell')q.sel.has(i)?q.sel.delete(i):q.sel.add(i);},
+  check(q){const N=q.n*q.m,x=q.sel.size,need=q.k*q.m;
+   if(!x)return{w:'먼저 눌러서 칠해 주세요.',soft:1};
+   if(x===need)return{ok:(q.m>1?`정답! ${N}칸 중 ${x}칸 = ${F(x,N)} = ${F(q.k,q.n)}<br>칸이 ${q.m}배로 잘게 나뉘어 있어서, 칠할 칸 수도 ${q.m}배가 됐어요.`:`정답! 전체를 똑같이 ${q.n}칸으로 나눈 것 중 ${q.k}칸이 ${F(q.k,q.n)}이에요.`)+(spread(q.sel)&&q.style==='bar'?'<br>떨어진 칸을 칠해도 칸 수가 같으면 양도 같아요!':'')};
+   if(q.m>1&&x===q.k)return{w:`분자는 ${q.k}이지만, 이 ${q.style==='bar'?'막대':'피자'}는 ${q.n}칸이 아니라 <b>${N}칸</b>으로 나뉘어 있어요. 💡 힌트를 눌러 볼까요?`};
+   return{w:x>need?`너무 많이 칠했어요. 지금은 ${F(x,N)}이에요.`:`조금 모자라요. 지금은 ${F(x,N)}이에요.`};},
+  hint:q=>q.m>1?`이 ${q.style==='bar'?'막대':'피자'}는 ${q.n*q.m}칸이에요. <b>${q.m}칸을 한 덩어리</b>로 묶으면 ${q.n}덩어리가 돼요. 그중 ${q.k}덩어리를 칠해요.`:`아래 수 ${q.n}(분모)은 '전체를 몇 칸으로 나눴나', 위 수 ${q.k}(분자)는 '그중 몇 칸을 칠하나'예요.`
+ },
+ read:{auto:1,
+  gen(){const n=rnd(3,10),k=rnd(1,n-1),style=pick(['bar','pizza']);
+   const pos=new Set(Math.random()<.5?Array.from({length:k},(_,i)=>i):shuffle([...Array(n).keys()]).slice(0,k));
+   const opts=[[k,n,'ok']];
+   for(const o of shuffle([[n-k,n,'rest'],[k,n-k,'part'],[n,k,'flip'],[k,n+1,'cnt'],[k+1,n,'cnt'],[k-1,n,'cnt']])){if(opts.length>=4)break;if(o[0]<1||o[1]<2||o[0]===o[1]||opts.some(p=>p[0]===o[0]&&p[1]===o[1]))continue;opts.push(o);}
+   return{n,k,style,pos,opts:shuffle(opts),bad:new Set()};},
+  ask:()=>'색칠한 부분은 전체의 얼마일까요?',
+  how:()=>'알맞은 분수를 눌러요.',
+  body(q){const fig=q.style==='bar'?tbar(q.n,i=>q.pos.has(i)?'on':'',false,`${q.n}칸 막대`):pizza({n:q.n,fill:i=>q.pos.has(i)?'#ffa94d':null,size:240,label:`${q.n}조각 피자`});
+   return `<div class="pfig">${fig}</div><div class="opts h">${q.opts.map((o,i)=>`<button type="button" class="choice${q.solved&&o[2]==='ok'?' right':''}${q.bad.has(i)?' wrong':''}" data-act="opt" data-i="${i}"${q.solved||q.bad.has(i)?' disabled':''}>${F(o[0],o[1])}</button>`).join('')}</div>`;},
+  act(q,a,i){if(a==='opt'){q.pick=i;return 'check';}},
+  check(q){const o=q.opts[q.pick];if(o[2]==='ok')return{ok:`정답! 전체 ${q.n}칸 중 ${q.k}칸을 칠했으니 ${F(q.k,q.n)}이에요.`};q.bad.add(q.pick);
+   return{w:{rest:`${F(o[0],o[1])}은 칠하지 <b>않은</b> 부분이에요. 칠한 칸을 세어 보세요.`,part:'분모는 칠한 칸과 안 칠한 칸을 <b>모두 합친</b> 전체 칸 수예요.',flip:'위아래가 바뀌었어요! 전체 칸 수는 아래(분모)에, 칠한 칸 수는 위(분자)에 써요.',cnt:'칸 수를 다시 세어 볼까요? 손가락으로 하나씩 짚어 봐요.'}[o[2]]};},
+  hint:()=>'먼저 <b>전체가 몇 칸</b>인지 세어 분모에 쓰고, 그다음 <b>칠한 칸</b>을 세어 분자에 써요.'
+ },
+ line:{
+  gen(){const R=Math.random()<.3?2:1,n=R===2?rnd(2,5):rnd(2,10);let k;do{k=rnd(1,R*n-1);}while(k===n||(R===2&&k<n&&Math.random()<.75));return{n,R,k,sel:null};},
+  ask:q=>`수직선에서 ${F(q.k,q.n)} 의 자리를 눌러 보세요.`,
+  how:()=>'눈금을 누르면 화살표가 꽂혀요.',
+  body(q){const T=q.n*q.R,x0=34,x1=526,X=i=>+(x0+(x1-x0)*i/T).toFixed(1),w=(x1-x0)/T;
+   let s=`<svg viewBox="0 0 560 104" class="pline" role="group" aria-label="0부터 ${q.R}까지 수직선">`;
+   if(q.solved)s+=`<rect x="${x0}" y="51" width="${X(q.k)-x0}" height="12" rx="4" fill="#9fd08f"/>`;
+   s+=`<line x1="${x0}" y1="57" x2="${x1}" y2="57" stroke="#1c2038" stroke-width="3" stroke-linecap="round"/>`;
+   for(let i=0;i<=T;i++){const big=i%q.n===0;s+=`<line x1="${X(i)}" y1="${big?43:48}" x2="${X(i)}" y2="${big?71:66}" stroke="#1c2038" stroke-width="${big?3:2}"/>`;if(big)s+=`<text x="${X(i)}" y="94" text-anchor="middle" font-size="19" font-weight="800" fill="#1c2038">${i/q.n}</text>`;}
+   if(q.sel!==null){const x=X(q.sel),c=q.solved?'#1f9d6b':'#f0582a';s+=`<polygon points="${x-10},20 ${x+10},20 ${x},38" fill="${c}"/>`;if(q.solved)s+=`<text x="${x}" y="14" text-anchor="middle" font-size="15" font-weight="800" fill="#16794f">${q.k}/${q.n}</text>`;}
+   for(let i=0;i<=T;i++)s+=`<rect data-act="tick" data-i="${i}" x="${Math.max(0,X(i)-w/2).toFixed(1)}" y="8" width="${(Math.min(560,X(i)+w/2)-Math.max(0,X(i)-w/2)).toFixed(1)}" height="70" fill="transparent" tabindex="0" role="button" aria-label="${i}번째 눈금"/>`;
+   return `<div class="pfig">${s}</svg><div class="pnow">${q.sel===null?'눈금을 눌러 보세요.':q.solved?'딱 맞는 자리예요!':'화살표를 꽂았어요. 확인해 볼까요?'}</div></div>`;},
+  act(q,a,i){if(a==='tick')q.sel=i;},
+  check(q){const{n,k,sel}=q;if(sel===null)return{w:'먼저 눈금을 눌러 주세요.',soft:1};
+   if(sel===k)return{ok:k<n?`정답! 0과 1 사이를 똑같이 ${n}칸으로 나눈 것 중 ${k}칸만큼 간 자리예요.`:`정답! ${F(1,n)}칸을 ${k}번 가면 1을 지나 ${k-n}칸 더 가요. 그래서 ${F(k,n)} = ${MX(Math.floor(k/n),k%n,n)}, 1보다 큰 분수예요.`};
+   return{w:`그 자리는 ${sel%n===0?sel/n:F(sel,n)}이에요. ${sel<k?'조금 더 오른쪽':'조금 더 왼쪽'}이에요.`};},
+  hint:q=>`0부터 1까지가 똑같이 ${q.n}칸으로 나뉘어 있어요. 한 칸이 ${F(1,q.n)}이에요. 0에서부터 <b>${q.k}칸</b> 가 보세요.`
+ },
+ compare:{auto:1,
+  gen(){const t=Math.random();let a,b,c,d,kind;
+   if(t<.3){kind='den';b=d=rnd(3,10);a=rnd(1,b-1);do{c=rnd(1,d-1);}while(c===a);}
+   else if(t<.6){kind='num';a=c=Math.random()<.6?1:rnd(2,3);b=rnd(a+1,10);do{d=rnd(a+1,10);}while(d===b);}
+   else if(t<.75){kind='eq';[a,b]=pick([[1,2],[1,3],[2,3],[1,4],[3,4],[2,5]]);const m=pick([2,3].filter(m=>b*m<=12));c=a*m;d=b*m;if(Math.random()<.5)[a,b,c,d]=[c,d,a,b];}
+   else{kind='diff';do{b=rnd(2,8);d=rnd(2,8);a=rnd(1,b-1);c=rnd(1,d-1);}while(b===d||a===c||a*d===b*c);}
+   const s=a*d-c*b;return{a,b,c,d,kind,ans:s>0?0:s===0?1:2,bad:new Set(),bars:false};},
+  ask:()=>'어느 분수가 더 클까요?',
+  how:()=>'알맞은 답을 눌러요. 헷갈리면 💡 힌트로 막대를 꺼내 보세요.',
+  body(q){const{a,b,c,d}=q,sym=['&gt;','=','&lt;'][q.ans];
+   let h=`<div class="cmpq">${F(a,b)}<span class="vsq${q.solved?' done':''}">${q.solved?sym:'?'}</span>${F(c,d)}</div>`;
+   h+=`<div class="opts h txt">${['왼쪽이 더 커요','똑같아요','오른쪽이 더 커요'].map((t,i)=>`<button type="button" class="choice${q.solved&&i===q.ans?' right':''}${q.bad.has(i)?' wrong':''}" data-act="opt" data-i="${i}"${q.solved||q.bad.has(i)?' disabled':''}>${t}</button>`).join('')}</div>`;
+   if(q.bars||q.solved)h+=`<div class="pfig" style="margin-top:12px"><div class="sub center" style="font-size:14px">왼쪽 ${a}/${b}</div>${tbar(b,i=>i<a?'on':'',false,`${a}/${b} 막대`)}<div class="sub center" style="font-size:14px;margin-top:6px">오른쪽 ${c}/${d}</div>${tbar(d,i=>i<c?'base':'',false,`${c}/${d} 막대`)}</div>`;
+   return h;},
+  act(q,a,i){if(a==='opt'){q.pick=i;return 'check';}},
+  check(q){const{a,b,c,d,kind}=q;
+   if(q.pick===q.ans){const L=b*d/gcd(b,d);return{ok:{den:'분모가 같으면 한 조각의 크기가 같아요. 그러니 조각이 <b>더 많은 쪽(분자가 큰 쪽)</b>이 커요.',num:a===1?`${F(1,Math.min(b,d))} 조각이 ${F(1,Math.max(b,d))} 조각보다 커요. <b>적게 나눌수록</b> 한 조각이 크거든요!`:'분자가 같으면 조각 수가 같아요. 그러면 <b>한 조각이 큰 쪽(분모가 작은 쪽)</b>이 커요.',eq:`막대 끝이 딱 맞아요! ${F(a,b)} = ${F(c,d)}, 크기가 같은 분수예요.`,diff:`막대 끝을 비교하면 보여요. 분모를 ${L}로 같게 만들면(통분) ${F(a*L/b,L)}와 ${F(c*L/d,L)}이 돼서 바로 비교할 수 있어요.`}[kind]};}
+   q.bad.add(q.pick);q.bars=true;
+   const bigDen=(q.pick===0&&b>d)||(q.pick===2&&d>b);
+   return{w:kind==='num'&&bigDen?'분모가 크다고 큰 분수가 아니에요! 분모가 크면 더 잘게 나눈 거라 <b>한 조각이 작아요</b>. 아래 막대를 보세요.':'아래 막대를 비교해 보세요. 칠한 부분의 <b>끝이 어디까지</b> 오는지 보면 돼요.'};},
+  hint(q){q.bars=true;return '두 분수를 같은 길이의 막대로 그려 봤어요. 칠한 부분의 끝이 더 오른쪽까지 오는 쪽이 커요.';}
+ },
+ set:{
+  gen(){const d=rnd(2,5),g=d<=3?rnd(2,4):rnd(2,3),k=rnd(1,d-1);return{d,g,k,t:d*g,e:pick(['🍬','🍓','🍪','🧁','🍩']),sel:new Set(),grp:false};},
+  ask:q=>`${q.e} ${q.t}개의 ${F(q.k,q.d)}는 몇 개일까요? 그만큼 골라 보세요.`,
+  how:()=>'하나씩 눌러서 고르고, 다시 누르면 빼요.',
+  body(q){const it=i=>`<button type="button" class="it${q.sel.has(i)?' on':''}" data-act="cell" data-i="${i}" aria-pressed="${q.sel.has(i)}" aria-label="${i+1}번째">${q.e}</button>`;
+   const inner=q.grp?`<div class="groups">${Array.from({length:q.d},(_,j)=>`<div class="grp">${Array.from({length:q.g},(_,i)=>it(j*q.g+i)).join('')}</div>`).join('')}</div>`:`<div class="candy">${Array.from({length:q.t},(_,i)=>it(i)).join('')}</div>`;
+   return `<div class="pfig">${inner}<div class="pnow">고른 개수: ${q.sel.size}개</div></div>`;},
+  act(q,a,i){if(a==='cell')q.sel.has(i)?q.sel.delete(i):q.sel.add(i);},
+  check(q){const{d,g,k,t}=q,x=q.sel.size;if(!x)return{w:'먼저 골라 주세요.',soft:1};
+   if(x===k*g){q.grp=true;return{ok:`정답! ${t}개를 똑같이 ${d}묶음으로 나누면 한 묶음에 ${g}개예요(${t} ÷ ${d} = ${g}). ${F(k,d)}는 그중 ${k}묶음이니까 ${g} × ${k} = <b>${k*g}개</b>!`};}
+   if(x===k)return{w:`${F(k,d)}는 ${k}개가 아니라, 전체를 <b>${d}묶음</b>으로 똑같이 나눈 것 중 <b>${k}묶음</b>이에요. 💡 힌트를 눌러 묶어 볼까요?`};
+   return{w:x>k*g?'너무 많이 골랐어요.':'조금 모자라요.'};},
+  hint(q){q.grp=true;return `${q.t}개를 똑같이 <b>${q.d}묶음</b>으로 나눠 봤어요. 분모 ${q.d}는 '몇 묶음으로 나눴나', 분자 ${q.k}는 '그중 몇 묶음'이에요.`;}
+ },
+ mixed:{
+  gen(){const n=pick([2,3,4,6]),w=rnd(1,2),r=rnd(1,n-1);return{n,w,r,k:w*n+r,rev:Math.random()<.5,sel:new Set()};},
+  ask:q=>`${q.rev?MX(q.w,q.r,q.n):F(q.k,q.n)} 만큼 피자를 칠해 보세요.`,
+  how:q=>`피자 한 판은 ${q.n}조각이에요. 조각을 눌러 칠해요.`,
+  body(q){return `<div class="pfig"><div class="pizrow">${Array.from({length:q.w+1},(_,x)=>`<div data-pz="${x}">${pizza({n:q.n,fill:i=>q.sel.has(x*q.n+i)?'#ffa94d':null,click:true,size:200,label:`${x+1}번째 피자`})}</div>`).join('')}</div><div class="pnow">칠한 조각: ${q.sel.size}개</div></div>`;},
+  act(q,a,i,pz){if(a==='cell'){const j=pz*q.n+i;q.sel.has(j)?q.sel.delete(j):q.sel.add(j);}},
+  check(q){const{n,w,r,k}=q,x=q.sel.size;if(!x)return{w:'먼저 조각을 칠해 주세요.',soft:1};
+   if(x===k)return{ok:`정답! ${F(1,n)} 조각 ${k}개 = ${F(k,n)}. ${n}조각이 모이면 피자 한 판(1)이니까, <b>한 판 ${w}개와 ${r}조각</b> → ${MX(w,r,n)}<br>${F(k,n)}처럼 분자가 분모보다 큰 분수를 <b>가분수</b>, ${MX(w,r,n)}처럼 자연수와 분수를 함께 쓴 것을 <b>대분수</b>라고 해요.`};
+   if(q.rev&&x===w+r)return{w:`${MX(w,r,n)}에서 앞의 ${w}는 '${w}조각'이 아니라 <b>피자 ${w}판 통째로</b>예요!`};
+   return{w:x>k?`너무 많이 칠했어요. 지금은 ${F(x,n)}이에요.`:`조금 모자라요. 지금은 ${F(x,n)}이에요.`};},
+  hint:q=>q.rev?`${MX(q.w,q.r,q.n)} = 피자 <b>${q.w}판 통째로</b> + ${q.r}조각이에요.`:`${q.n}조각이 모이면 피자 한 판 = 1이에요. ${q.k}조각을 ${q.n}조각씩 묶어 보세요.`
+ },
+ equiv:{
+  gen(){const[a,b]=pick([[1,2],[1,3],[2,3],[1,4],[3,4],[2,5],[1,5],[3,5],[1,6],[5,6]]);
+   const g=shuffle([2,3,4,5,6].filter(m=>b*m<=12).map(m=>[a*m,b*m,'ok'])).slice(0,2);const m=g[0][1]/b;
+   const opts=[...g];
+   for(const o of shuffle([[a+m,b+m,'add'],[a+1,b+1,'add'],[a,b*m,'den'],[a*m+1,b*m,'near'],[a*m-1,b*m,'near']])){if(opts.length>=4)break;const[x,y]=o;if(x<1||x>=y||x*b===y*a||opts.some(p=>p[0]===x&&p[1]===y))continue;opts.push(o);}
+   return{a,b,opts:shuffle(opts),sel:new Set()};},
+  ask:q=>`${F(q.a,q.b)} 와 크기가 같은 분수를 <b>모두</b> 골라 보세요.`,
+  how:()=>'분수를 누르면 아래에 막대가 생겨요. 목표 막대와 끝이 딱 맞는지 비교해 보세요.',
+  body(q){const{a,b}=q;let h=`<div class="opts h">${q.opts.map((o,i)=>`<button type="button" class="choice${q.sel.has(i)?(q.solved?' right':' on'):''}" data-act="opt" data-i="${i}" aria-pressed="${q.sel.has(i)}">${F(o[0],o[1])}</button>`).join('')}</div>`;
+   h+=`<div class="pfig" style="margin-top:12px"><div class="sub center" style="font-size:14px">목표 ${a}/${b}</div>${tbar(b,i=>i<a?'base':'',false,`목표 ${a}/${b} 막대`)}`;
+   q.opts.forEach((o,i)=>{if(q.sel.has(i))h+=`<div class="sub center" style="font-size:14px;margin-top:6px">${o[0]}/${o[1]}</div>${tbar(o[1],j=>j<o[0]?(q.solved?'ok':'on'):'',false,`${o[0]}/${o[1]} 막대`)}`;});
+   return h+'</div>';},
+  act(q,a,i){if(a==='opt')q.sel.has(i)?q.sel.delete(i):q.sel.add(i);},
+  check(q){const ch=[...q.sel].map(i=>q.opts[i]);if(!ch.length)return{w:'먼저 분수를 골라 주세요.',soft:1};
+   const bad=ch.filter(o=>o[2]!=='ok'),need=q.opts.filter(o=>o[2]==='ok');
+   if(bad.length){const o=bad[0];return{w:`${F(o[0],o[1])}는 막대 끝이 목표와 맞지 않아요. `+({add:'분모와 분자에 같은 수를 <b>더하면</b> 크기가 바뀌어요. 같은 수를 <b>곱해야</b> 해요!',den:'분모만 바꾸면 조각만 작아져서 양이 줄어요. 분자도 똑같이 바꿔야 해요.',near:'아주 조금 어긋나요. 칸 수를 꼼꼼히 비교해 보세요.'}[o[2]])};}
+   if(ch.length<need.length)return{w:'고른 건 맞아요! 그런데 같은 분수가 <b>하나 더</b> 숨어 있어요.'};
+   return{ok:`정답! ${need.map(o=>F(o[0],o[1])).join(', ')} 모두 ${F(q.a,q.b)}와 크기가 같아요. 분모와 분자에 <b>같은 수를 곱하면</b> 조각만 잘게 나뉘고 양은 그대로예요.`};},
+  hint:q=>`같은 분수는 <b>${q.opts.filter(o=>o[2]==='ok').length}개</b>예요. 분모가 ${q.b}의 몇 배인지 보고, 분자도 ${q.a}의 똑같은 배인지 확인해요.`
+ },
+ whole:{
+  gen(){return{types:pick([[2,4],[2,4,8],[3,6],[2,3,6],[4,8],[2,6],[3,6,12],[2,8],[4,12],[3,12]]),pcs:[]};},
+  ask:()=>'조각을 이어 붙여서 딱 <b>1</b>을 만들어 보세요.',
+  how:q=>`${q.types.map(d=>F(1,d)).join(', ')} 조각을 <b>모두 한 번 이상</b> 써야 해요.`,
+  body(q){let cum=0,pc='';for(const d of q.pcs){const w=100/d;pc+=`<div class="pc${d===q.types[0]?'':' s'}" style="left:${cum}%;width:${w}%">${d<=8?`1/${d}`:''}</div>`;cum+=w;}
+   const S=q.pcs.reduce((s,d)=>s+24/d,0);
+   return `<div class="pfig"><div class="sub" style="font-size:14px">목표: 1 (전체)</div><div class="tb" style="grid-template-columns:1fr;height:36px"><span class="ok" style="display:grid;place-items:center;font-weight:800">1</span></div>
+    <div class="sub" style="font-size:14px;margin-top:10px">내가 붙인 조각</div><div class="wtrack"><div style="position:absolute;inset:0;border:2px dashed var(--line2);border-radius:10px;background:#fff"></div>${pc}</div>
+    <div class="pnow">지금까지: ${S===0?'0':S===24?'<b>1</b>':F(...red(S,24))}</div></div>
+    <div class="row" style="justify-content:center">${q.types.map(d=>`<button type="button" class="btn ghost" data-act="add" data-i="${d}">+ ${F(1,d)} 조각</button>`).join('')}</div>
+    <div class="row" style="justify-content:center;margin-top:8px"><button type="button" class="btn ghost" data-act="undo" data-i="0">↩ 하나 빼기</button><button type="button" class="btn ghost" data-act="clr" data-i="0">비우기</button></div>`;},
+  act(q,a,i){const S=q.pcs.reduce((s,d)=>s+24/d,0);
+   if(a==='add'){if(S+24/i>24)return{w:`${F(1,i)} 조각을 붙이면 1을 넘어요! 더 작은 조각을 써 볼까요?`};q.pcs.push(i);}
+   else if(a==='undo')q.pcs.pop();else if(a==='clr')q.pcs=[];},
+  check(q){const S=q.pcs.reduce((s,d)=>s+24/d,0);if(!S)return{w:'아래 버튼으로 조각을 붙여 주세요.',soft:1};
+   if(S<24)return{w:`아직 ${F(...red(24-S,24))} 만큼 비어 있어요. 어떤 조각이 들어갈까요?`};
+   const miss=q.types.filter(d=>!q.pcs.includes(d));
+   if(miss.length)return{w:`1을 만들었어요! 그런데 ${miss.map(d=>F(1,d)).join(', ')} 조각도 한 번은 써야 해요. 바꿔 볼까요?`};
+   const cnt=q.types.map(d=>`${F(1,d)} ${q.pcs.filter(x=>x===d).length}개`).join(' + ');
+   const[A,B]=q.types;return{ok:`정답! ${cnt} = 1<br>${F(1,A)} 조각 하나는 ${F(1,B)} 조각 ${B/A}개와 크기가 같아요. 5학년에서 배우는 '분모가 다른 분수의 덧셈'을 손으로 해 본 거예요.`};},
+  hint(q){const[A,B]=q.types;return `큰 조각부터 붙이고, 남은 빈칸을 작은 조각으로 채워 보세요. ${F(1,A)} 조각 하나는 ${F(1,B)} 조각 ${B/A}개와 같아요.`;}
+ },
+ share:{
+  gen(){let p,k;do{k=rnd(2,5);p=rnd(1,5);}while(p===k||p%k===0);return{p,k,sel:new Set()};},
+  ask:q=>`피자 ${q.p}판을 친구 ${q.k}명이 똑같이 나눠 먹어요. 🐻 곰돌이가 먹을 만큼 조각을 골라 보세요.`,
+  how:q=>`피자는 한 판에 ${q.k}조각씩 잘라 두었어요. 친구들: ${KN.slice(0,q.k).join(', ')}`,
+  body(q){return `<div class="pfig"><div class="pizrow">${Array.from({length:q.p},(_,x)=>`<div data-pz="${x}">${pizza({n:q.k,fill:i=>q.sel.has(x*q.k+i)?'#ffa94d':null,click:true,size:200,label:`${x+1}번째 피자`})}</div>`).join('')}</div><div class="pnow">🐻 곰돌이 몫: 조각 ${q.sel.size}개 = ${F(q.sel.size,q.k)}판</div></div>`;},
+  act(q,a,i,pz){if(a==='cell'){const j=pz*q.k+i;q.sel.has(j)?q.sel.delete(j):q.sel.add(j);}},
+  check(q){const{p,k}=q,x=q.sel.size;if(!x)return{w:'먼저 곰돌이가 먹을 조각을 골라 주세요.',soft:1};
+   if(x===p)return{ok:`정답! 피자 ${p}판에는 조각이 ${p*k}개 있고, ${k}명이 똑같이 나누면 한 명에 ${p}개씩이에요. 한 조각이 ${F(1,k)}판이니까 곰돌이는 ${F(p,k)}판!<br><b>${p} ÷ ${k} = ${F(p,k)}</b>${p>k?` = ${MX(Math.floor(p/k),p%k,k)}`:''} 나눗셈의 답을 분수로 쓸 수 있어요.`};
+   if(x===1)return{w:`한 조각이면 ${F(1,k)}판이에요. 그런데 피자가 ${p}판이나 있어요! 남은 조각은 누가 먹을까요?`};
+   return{w:x>p?'곰돌이가 그만큼 먹으면 다른 친구들 몫이 모자라요.':'그러면 조각이 남아요. 남김없이 똑같이 나눠야 해요.'};},
+  hint:q=>`친구 ${q.k}명이 피자 한 판에서 <b>한 조각씩</b> 가져가면 공평해요. 피자가 ${q.p}판이니까 곰돌이는 몇 조각?`
+ }
+};
+const PS={mode:'mix',type:'color',q:null,no:0,right:0,streak:0,solvedT:new Set(),hint:''};
+let PP_FOCUS=null;
+function ppNew(force){
+  let t=force||PS.mode;
+  if(t==='mix'){const ids=PT.map(x=>x.id).filter(x=>x!==PS.type),fresh=ids.filter(x=>!PS.solvedT.has(x));t=pick(fresh.length&&Math.random()<.7?fresh:ids);}
+  PS.type=t;PS.q=PQ[t].gen();PS.q.tries=0;PS.no++;PS.hint='';ppMsg('');ppRender();
+}
+function ppMsg(h,good,shake){const m=$('#pp-msg');m.innerHTML=h;m.className='msg'+(good?' good':'');if(shake){void m.offsetWidth;m.classList.add('shake');}}
+function ppRender(){
+  const T=PT.find(x=>x.id===PS.type),D=PQ[PS.type],q=PS.q;
+  $('#pp-types').innerHTML=`<button type="button" class="pchip${PS.mode==='mix'?' on':''}" data-pm="mix">🎲 섞어서</button>`+PT.map(t=>`<button type="button" class="pchip${PS.mode===t.id?' on':''}" data-pm="${t.id}">${t.ic} ${t.name}${PS.solvedT.has(t.id)?' <span class="ck">✓</span>':''}</button>`).join('');
+  $('#pp-score').innerHTML=`<span>✅ 맞힌 문제 <b>${PS.right}</b></span><span>🔥 연속 정답 <b>${PS.streak}</b></span><span>🧩 풀어 본 종류 <b>${PS.solvedT.size}</b> <small>/ ${PT.length}</small></span>`;
+  $('#pp-head').innerHTML=`<div class="chap"><div class="chap-ico" aria-hidden="true">${T.ic}</div><div><div class="chap-meta">${PS.no}번째 문제 · ${T.lv}</div><h2>${T.name}</h2></div></div><p class="pq">${D.ask(q)}</p><p class="sub" style="margin:-4px 0 0;font-size:14px">${D.how(q)}</p>`;
+  $('#pp-body').innerHTML=D.body(q);
+  const hb=$('#pp-hintbox');hb.innerHTML=PS.hint?`💡 ${PS.hint}`:'';
+  $('#pp-check').hidden=!!(D.auto||q.solved);
+  $('#pp-hint').hidden=!!q.solved;
+  const nx=$('#pp-next');nx.className=q.solved?'btn':'btn ghost';nx.textContent=q.solved?'다음 문제 →':'다른 문제 →';
+  if(PP_FOCUS){const f=PP_FOCUS;PP_FOCUS=null;const sel=f.a==='cell'?(f.pzs?`[data-pz="${f.pz}"] `:'')+`[data-i="${f.i}"]`:`[data-act="${f.a}"][data-i="${f.i}"]`;const el=$('#pp-body').querySelector(sel);if(el&&!el.disabled)el.focus();}
+}
+function ppAct(a,i,pz){const q=PS.q,D=PQ[PS.type];if(q.solved)return;
+  const r=D.act(q,a,i,pz);if(r==='check'){ppCheck();return;}
+  ppMsg(r&&r.w?`🤏 ${r.w}`:'',false,!!(r&&r.w));ppRender();}
+function ppCheck(){const q=PS.q,D=PQ[PS.type];if(q.solved)return;
+  const r=D.check(q);
+  if(r.ok){q.solved=true;PS.right++;PS.streak=q.tries?0:PS.streak+1;PS.solvedT.add(PS.type);
+    ppMsg(`🎉 ${r.ok}${PS.streak>=3?`<br><b>🔥 ${PS.streak}문제 연속 정답!</b>`:''}`,true);
+    if(PS.right>=10)mark('fp');if(PS.solvedT.size===PT.length)mark('fq');}
+  else{if(!r.soft){q.tries++;PS.streak=0;if(q.tries>=2&&!PS.hint)PS.hint=D.hint(q);}ppMsg(`🤔 ${r.w}`,false,true);}
+  ppRender();setTimeout(()=>{const m=$('#pp-msg');if(m.textContent)m.scrollIntoView({block:'nearest',behavior:'smooth'});},30);}
+$('#pp-body').addEventListener('click',e=>{const el=e.target.closest('[data-act],[data-i]');if(!el||!$('#pp-body').contains(el)||el.disabled)return;
+  const pzEl=el.closest('[data-pz]'),a=el.dataset.act||'cell',i=+el.dataset.i,pz=pzEl?+pzEl.dataset.pz:0;
+  PP_FOCUS=e.detail===0?{a,i,pz,pzs:!!pzEl}:null;ppAct(a,i,pz);});
+$('#pp-body').addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const el=e.target;if(el.tagName==='BUTTON'||!el.dataset||el.dataset.i===undefined)return;e.preventDefault();
+  const pzEl=el.closest('[data-pz]'),a=el.dataset.act||'cell',i=+el.dataset.i,pz=pzEl?+pzEl.dataset.pz:0;PP_FOCUS={a,i,pz,pzs:!!pzEl};ppAct(a,i,pz);});
+$('#pp-types').addEventListener('click',e=>{const b=e.target.closest('[data-pm]');if(!b)return;PS.mode=b.dataset.pm;ppNew(PS.mode==='mix'?null:PS.mode);setTimeout(()=>{const on=$('#pp-types .on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});},0);});
+$('#pp-check').onclick=ppCheck;
+$('#pp-hint').onclick=()=>{PS.hint=PQ[PS.type].hint(PS.q);ppRender();};
+$('#pp-next').onclick=()=>{ppNew(PS.mode==='mix'?null:PS.mode);$('#pp-head').scrollIntoView({block:'start',behavior:'smooth'});};
+
 /* init */
-renderFA();renderFB();renderFC();renderO1();renderO2();O3.f='떡';renderO3();renderO4();renderOC();newSort();updateStars();SC=0;VIS.add(0);renderScene();
+renderFA();renderFB();renderFC();renderO1();renderO2();O3.f='떡';renderO3();renderO4();renderOC();newSort();ppNew('color');updateStars();SC=0;VIS.add(0);renderScene();
 </script>
 </body>
 </html>
